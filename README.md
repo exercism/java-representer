@@ -14,4 +14,4 @@ The representer implements the [representer interface](https://github.com/exerci
 
 2. Run the container
 
-`sudo docker run  -v <EXERCISES_FOLDER>:/app/data exercism/java-representer <EXERCISE_SLUG> <EXERCISES_FOLDER>`
+`sudo docker run  -v <EXERCISES_FOLDER>:/app/data exercism/java-representer <EXERCISE_SLUG> /app/data/`
