@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class MappingSerializatorImpl implements MappingSerializator {
+
     private String folderPath;
     private String mappingFilePath;
     private FileWriter fileWriter;

@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.github.javaparser.ast.visitor.ModifierVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 
@@ -20,6 +23,7 @@ import representer.normalizer.PlaceholderNormalizer;
 
 public class RepresenterCli {
 
+    private static final Logger logger = LogManager.getLogger(RepresenterCli.class);
 
     private static final List<ModifierVisitor<String>> modifierNormalizers =
             Arrays.asList(new PackageNormalizer(), new BlockNormalizer(), 
@@ -39,6 +43,7 @@ public class RepresenterCli {
         final String slug = args[0];
         final String contextPath = args[1];
 
+        logger.info("Parameters slug: {}, contextPath: {}", slug, contextPath);
         if (!validator.isValidContext(contextPath)) {
             throw new IllegalArgumentException(
                     "exercise-context-path requires the ending trailing slash");
@@ -47,7 +52,12 @@ public class RepresenterCli {
 
         Representer representer = new Representer(modifierNormalizers, voidNormalizers);
         final String sourceFolder = contextPath + slug + "/" + JAVA_PROJECT_STRUCTURE;
+        logger.info("Search for source file into folder {}", sourceFolder);
         String[] sources = new File(sourceFolder).list();
+        if (sources == null) {
+            logger.error("Problems reading the folder");
+            System.exit(-1);
+        }
         Optional<String> javaSource =
                 Stream.of(sources).filter(s -> s.endsWith(".java")).findFirst();
         
@@ -59,11 +69,14 @@ public class RepresenterCli {
                 // + " return \"One for \" + "
                 // + " (name != null ? name : \"you\") + \", one for me.\";"
                 // + " }" + " }";
-                String twoFer = new String(Files.readAllBytes(Paths.get(sourceFolder, "/", s)));
+                final String source = sourceFolder + "/" + s;
+                String twoFer = new String(Files.readAllBytes(Paths.get(source)));
+                logger.info("Found source file {}", source);
                 representer.generate(twoFer, new RepresentationSerializatorImpl(contextPath),
                         new MappingSerializatorImpl(contextPath));
+                logger.info("Generated representation file");
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("Problems reading the source file", e);
             }
         });
 
