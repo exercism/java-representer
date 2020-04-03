@@ -63,16 +63,10 @@ public class RepresenterCli {
         
         javaSource.ifPresent(s -> {
             try {
-
-                // String twoFer = "package myTest;\n\n\n\n class Twofer {"
-                // + " String twofer(String name) {"
-                // + " return \"One for \" + "
-                // + " (name != null ? name : \"you\") + \", one for me.\";"
-                // + " }" + " }";
                 final String source = sourceFolder + "/" + s;
-                String twoFer = new String(Files.readAllBytes(Paths.get(source)));
+                String sourceFileContent = new String(Files.readAllBytes(Paths.get(source)));
                 logger.info("Found source file {}", source);
-                representer.generate(twoFer, new RepresentationSerializatorImpl(contextPath),
+                representer.generate(sourceFileContent, new RepresentationSerializatorImpl(contextPath),
                         new MappingSerializatorImpl(contextPath));
                 logger.info("Generated representation file");
             } catch (IOException e) {
