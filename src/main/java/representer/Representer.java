@@ -43,7 +43,10 @@ public class Representer {
         CompilationUnit unit = StaticJavaParser.parse(sourceContent);
         voidNormalizers.forEach(n -> unit.accept(n, null));
         genericNormalizers.forEach(n -> unit.accept(n, null));
-        String representation = unit.toString();
+        RepresenterPrintVisitor representerPrintVisitor = new RepresenterPrintVisitor(
+                CompilationUnit.getToStringPrettyPrinterConfiguration());
+        unit.accept(representerPrintVisitor, null);
+        String representation = representerPrintVisitor.toString();
         representationSerializator.serialize(representation);
         Optional<PlaceholderNormalizer> placeholderNormalizer =
                 placeholderNormalizer(voidNormalizers);
