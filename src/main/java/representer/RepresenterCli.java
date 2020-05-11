@@ -58,23 +58,33 @@ public class RepresenterCli {
             logger.error("Problems reading the folder");
             System.exit(-1);
         }
-        Optional<String> javaSource =
-                Stream.of(sources).filter(s -> s.endsWith(".java")).findFirst();
+        Stream<String> javaSource = Stream.of(sources).filter(s -> s.endsWith(".java")).sorted();
         
-        javaSource.ifPresent(s -> {
+        final RepresentationSerializatorImpl representationSerializator =
+                new RepresentationSerializatorImpl(contextPath);
+        final MappingSerializatorImpl mappingSerializator =
+                new MappingSerializatorImpl(contextPath);
+
+        javaSource.forEach(s -> {
             try {
                 final String source = sourceFolder + "/" + s;
                 String sourceFileContent = new String(Files.readAllBytes(Paths.get(source)));
                 logger.info("Found source file {}", source);
-                representer.generate(sourceFileContent, new RepresentationSerializatorImpl(contextPath),
-                        new MappingSerializatorImpl(contextPath));
-                logger.info("Generated representation file");
+                representer.generate(sourceFileContent, representationSerializator,
+                        mappingSerializator);
+                logger.info("Generated representation");
             } catch (IOException e) {
                 logger.error("Problems reading the source file", e);
             }
         });
-
-
+        Optional<PlaceholderNormalizer> placeholderNormalizer =
+                representer.placeholderNormalizer();
+        if (placeholderNormalizer.isPresent()) {
+            mappingSerializator.serialize(placeholderNormalizer.get().mapping());
+            logger.info("Generated mapping");
+        } else {
+            logger.warn("PlacelholderNormalizer not loaded, mapping file will not be created");
+        }
     }
 
 

@@ -45,15 +45,11 @@ public class Representer {
         genericNormalizers.forEach(n -> unit.accept(n, null));
         String representation = unit.toString();
         representationSerializator.serialize(representation);
-        Optional<PlaceholderNormalizer> placeholderNormalizer =
-                placeholderNormalizer(voidNormalizers);
-        if (placeholderNormalizer.isPresent()) {
-            mappingSerializator.serialize(placeholderNormalizer.get().mapping());
-            logger.info("Generated mapping file");
-        } else {
-            logger.warn("PlacelholderNormalizer not loaded, mapping file will not be created");
-        }
         return representation;
+    }
+
+    public Optional<PlaceholderNormalizer> placeholderNormalizer() {
+        return placeholderNormalizer(voidNormalizers);
     }
 
     private Optional<PlaceholderNormalizer> placeholderNormalizer(
