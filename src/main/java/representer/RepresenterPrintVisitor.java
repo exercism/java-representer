@@ -30,59 +30,61 @@ public class RepresenterPrintVisitor extends PrettyPrintVisitor {
     }
 
     @Override
-    public void visit(BlockStmt n, Void arg) {
-        printOrphanCommentsBeforeThisChildNode(n);
-        printComment(n.getComment(), arg);
+    public void visit(BlockStmt node, Void argument) {
+        printOrphanCommentsBeforeThisChildNode(node);
+        printComment(node.getComment(), argument);
         printer.println();
         printer.println("{");
-        if (n.getStatements() != null) {
+        if (node.getStatements() != null) {
             printer.indent();
-            for (final Statement s : n.getStatements()) {
-                s.accept(this, arg);
+            for (final Statement statament : node.getStatements()) {
+                statament.accept(this, argument);
                 printer.println();
             }
             printer.unindent();
         }
-        printOrphanCommentsEnding(n);
+        printOrphanCommentsEnding(node);
         printer.print("}");
     }
 
     @Override
-    public void visit(ClassOrInterfaceDeclaration n, Void arg) {
-        printOrphanCommentsBeforeThisChildNode(n);
-        printComment(n.getComment(), arg);
-        printMemberAnnotations(n.getAnnotations(), arg);
-        printModifiers(n.getModifiers());
+    public void visit(ClassOrInterfaceDeclaration node, Void argument) {
+        printOrphanCommentsBeforeThisChildNode(node);
+        printComment(node.getComment(), argument);
+        printMemberAnnotations(node.getAnnotations(), argument);
+        printModifiers(node.getModifiers());
 
-        if (n.isInterface()) {
+        if (node.isInterface()) {
             printer.print("interface ");
         } else {
             printer.print("class ");
         }
 
-        n.getName().accept(this, arg);
+        node.getName().accept(this, argument);
 
-        printTypeParameters(n.getTypeParameters(), arg);
+        printTypeParameters(node.getTypeParameters(), argument);
 
-        if (!n.getExtendedTypes().isEmpty()) {
+        if (!node.getExtendedTypes().isEmpty()) {
             printer.print(" extends ");
-            for (final Iterator<ClassOrInterfaceType> i = n.getExtendedTypes().iterator(); i
+            for (final Iterator<ClassOrInterfaceType> classOrInterfaceIterator =
+                    node.getExtendedTypes().iterator(); classOrInterfaceIterator
                     .hasNext();) {
-                final ClassOrInterfaceType c = i.next();
-                c.accept(this, arg);
-                if (i.hasNext()) {
+                final ClassOrInterfaceType classOrInterface = classOrInterfaceIterator.next();
+                classOrInterface.accept(this, argument);
+                if (classOrInterfaceIterator.hasNext()) {
                     printer.print(", ");
                 }
             }
         }
 
-        if (!n.getImplementedTypes().isEmpty()) {
+        if (!node.getImplementedTypes().isEmpty()) {
             printer.print(" implements ");
-            for (final Iterator<ClassOrInterfaceType> i = n.getImplementedTypes().iterator(); i
+            for (final Iterator<ClassOrInterfaceType> classOrInterfaceIterator =
+                    node.getImplementedTypes().iterator(); classOrInterfaceIterator
                     .hasNext();) {
-                final ClassOrInterfaceType c = i.next();
-                c.accept(this, arg);
-                if (i.hasNext()) {
+                final ClassOrInterfaceType classOrInterface = classOrInterfaceIterator.next();
+                classOrInterface.accept(this, argument);
+                if (classOrInterfaceIterator.hasNext()) {
                     printer.print(", ");
                 }
             }
@@ -90,11 +92,11 @@ public class RepresenterPrintVisitor extends PrettyPrintVisitor {
         printer.println();
         printer.println("{");
         printer.indent();
-        if (!isNullOrEmpty(n.getMembers())) {
-            printMembers(n.getMembers(), arg);
+        if (!isNullOrEmpty(node.getMembers())) {
+            printMembers(node.getMembers(), argument);
         }
 
-        printOrphanCommentsEnding(n);
+        printOrphanCommentsEnding(node);
 
         printer.unindent();
         printer.print("}");
@@ -161,36 +163,37 @@ public class RepresenterPrintVisitor extends PrettyPrintVisitor {
         }
     }
 
-    private void printComment(final Optional<Comment> comment, final Void arg) {
-        comment.ifPresent(c -> c.accept(this, arg));
+    private void printComment(final Optional<Comment> comment, final Void argument) {
+        comment.ifPresent(c -> c.accept(this, argument));
     }
 
     private void printMemberAnnotations(final NodeList<AnnotationExpr> annotations,
-            final Void arg) {
+            final Void argument) {
         if (annotations.isEmpty()) {
             return;
         }
-        for (final AnnotationExpr a : annotations) {
-            a.accept(this, arg);
+        for (final AnnotationExpr annotation : annotations) {
+            annotation.accept(this, argument);
             printer.println();
         }
     }
 
-    private void printMembers(final NodeList<BodyDeclaration<?>> members, final Void arg) {
+    private void printMembers(final NodeList<BodyDeclaration<?>> members, final Void argument) {
         for (final BodyDeclaration<?> member : members) {
             printer.println();
-            member.accept(this, arg);
+            member.accept(this, argument);
             printer.println();
         }
     }
 
-    private void printTypeParameters(final NodeList<TypeParameter> args, final Void arg) {
+    private void printTypeParameters(final NodeList<TypeParameter> args, final Void argument) {
         if (!isNullOrEmpty(args)) {
             printer.print("<");
-            for (final Iterator<TypeParameter> i = args.iterator(); i.hasNext();) {
-                final TypeParameter t = i.next();
-                t.accept(this, arg);
-                if (i.hasNext()) {
+            for (final Iterator<TypeParameter> typeParameterInterface =
+                    args.iterator(); typeParameterInterface.hasNext();) {
+                final TypeParameter typeParameter = typeParameterInterface.next();
+                typeParameter.accept(this, argument);
+                if (typeParameterInterface.hasNext()) {
                     printer.print(", ");
                 }
             }
