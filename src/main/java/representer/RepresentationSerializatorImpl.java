@@ -25,7 +25,7 @@ public class RepresentationSerializatorImpl implements RepresentationSerializato
     public void serialize(String content) {
         try {
             fileWriter.write(content);
-            fileWriter.close();
+            fileWriter.flush();
         } catch (IOException e) {
             throw new SerializatorException(e);
         }
