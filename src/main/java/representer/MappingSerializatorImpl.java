@@ -30,7 +30,7 @@ public class MappingSerializatorImpl implements MappingSerializator {
         String json = jsonSerialization(mapping);
         try {
             fileWriter.write(json);
-            fileWriter.close();
+            fileWriter.flush();
         } catch (IOException e) {
             throw new SerializatorException(e);
         }

@@ -1,0 +1,8 @@
+class PLACEHOLDER_1
+{
+
+    String PLACEHOLDER_2(String PLACEHOLDER_3) 
+    {
+        return "One for " + (PLACEHOLDER_3 != null ? PLACEHOLDER_3 : "you") + ", one for me.";
+    }
+}
