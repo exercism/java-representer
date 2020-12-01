@@ -1,0 +1,21 @@
+class PLACEHOLDER_1
+{
+
+    private String PLACEHOLDER_2;
+
+    PLACEHOLDER_1(String PLACEHOLDER_3) 
+    {
+        this.PLACEHOLDER_2 = generateAcronym(PLACEHOLDER_3);
+    }
+
+    String PLACEHOLDER_4() 
+    {
+        return PLACEHOLDER_2;
+    }
+
+    private String PLACEHOLDER_5(String PLACEHOLDER_3) 
+    {
+        String PLACEHOLDER_6 = PLACEHOLDER_3.replace("_", "");
+        return PLACEHOLDER_9.stream(PLACEHOLDER_6.split("(?!')\\W")).filter(PLACEHOLDER_8 -> !PLACEHOLDER_8.isEmpty()).map(PLACEHOLDER_8 -> PLACEHOLDER_8.substring(0, 1)).collect(PLACEHOLDER_7.joining()).toUpperCase();
+    }
+}
