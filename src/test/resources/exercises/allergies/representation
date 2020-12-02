@@ -1,0 +1,20 @@
+class PLACEHOLDER_1
+{
+
+    private int PLACEHOLDER_2;
+
+    PLACEHOLDER_1(int PLACEHOLDER_2) 
+    {
+        this.PLACEHOLDER_2 = PLACEHOLDER_2;
+    }
+
+    List<Allergen> PLACEHOLDER_3() 
+    {
+        return PLACEHOLDER_5.allOf(Allergen.class).stream().filter(this::isAllergicTo).collect(PLACEHOLDER_4.toList());
+    }
+
+    boolean PLACEHOLDER_6(Allergen PLACEHOLDER_7) 
+    {
+        return (PLACEHOLDER_2 & PLACEHOLDER_7.getScore()) != 0;
+    }
+}
