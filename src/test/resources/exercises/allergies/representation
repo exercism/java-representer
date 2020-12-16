@@ -31,7 +31,7 @@ class PLACEHOLDER_13
         this.PLACEHOLDER_10 = PLACEHOLDER_10;
     }
 
-    List<Allergen> PLACEHOLDER_14() 
+    List<PLACEHOLDER_1> PLACEHOLDER_14() 
     {
         return EnumSet.allOf(Allergen.class).stream().filter(this::isAllergicTo).collect(Collectors.toList());
     }
