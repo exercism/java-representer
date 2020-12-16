@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.EnumConstantDeclaration;
@@ -18,9 +19,12 @@ import com.github.javaparser.ast.expr.FieldAccessExpr;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.expr.NameExpr;
 import com.github.javaparser.ast.stmt.ReturnStmt;
+import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.Type;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.resolution.UnsolvedSymbolException;
+
+import javassist.bytecode.TypeAnnotationsAttribute;
 
 public class PlaceholderNormalizer extends VoidVisitorAdapter<String> {
 	private static final Logger logger = LogManager.getLogger(PlaceholderNormalizer.class);
@@ -38,31 +42,39 @@ public class PlaceholderNormalizer extends VoidVisitorAdapter<String> {
 	@Override
 	public void visit(MethodDeclaration n, String arg) {
 		logger.debug("MethodDeclaration: {}", n.getName().asString());
-		logger.debug(" --- " + n.getTypeAsString());
+		logger.debug("method return type: {}", n.getTypeAsString());
 		mapType(n.getType());
-		n.getParameters().forEach(p -> System.out.println(p.getType().asString()));
+		n.getParameters().forEach(p -> logger.debug("method parameter: {}", p.getType().asString()));
 		final String name = n.getNameAsString();
 		n.setName(mapper.getPlaceholder(name));
 		super.visit(n, arg);
 	}
 	
-	private void mapType(Type t) {
+		private void mapType(Type t) {
 		if(t.isClassOrInterfaceType()) {
-			logger.debug("sono un tipo classe o interfaccia");
+			logger.debug("class or interface type");
+			ClassOrInterfaceType classOrInterfaceType = t.asClassOrInterfaceType();
+	        Optional<NodeList<Type>> typeArguments = classOrInterfaceType.getTypeArguments();
+	        typeArguments.ifPresent(types -> {
+	        	String genericsClass = types.get(0).asString();
+	        	if(genericsClass.length() > 1) { // workaround to avoid substitution of T
+	        		types.set(0, new ClassOrInterfaceType(null,mapper.getPlaceholder(genericsClass)));
+	        	}
+	        });
 		}
 		if(t.isArrayType()) {
-			logger.debug("sono un tipo array");
+			logger.debug("array type");
 			mapType(t.getElementType());
 		}
 		if(t.isPrimitiveType()) {
-			logger.debug("sono primitivo");
+			logger.debug("primitive type");
 		}
 		
 		if(t.isTypeParameter()) {
-			logger.debug("son un tipo parametro");
+			logger.debug("type parameter");
 		}
 		if(t.isVoidType()) {
-			logger.debug("sono void");
+			logger.debug("void type");
 		}
 	}
 
@@ -189,7 +201,7 @@ public class PlaceholderNormalizer extends VoidVisitorAdapter<String> {
 
 	private String qualifiedName(NameExpr nameExpr) {
 		try {
-			logger.debug("--> " + nameExpr.getNameAsString());
+			logger.debug("qualified name: {}", nameExpr.getNameAsString());
 			if (Character.isUpperCase(nameExpr.getNameAsString().charAt(0))) {
 				return nameExpr.calculateResolvedType().describe();
 			} else {
