@@ -153,8 +153,10 @@ public class PlaceholderNormalizer extends VoidVisitorAdapter<String> {
 			final String name = n.getNameAsString();
 			n.setName(mapper.getPlaceholder(name));
 			n.getArguments().forEach(a -> {
-				String nn = a.asNameExpr().getName().asString();
-				a.asNameExpr().setName(mapper.getPlaceholder(nn));
+				if(a.isNameExpr()) {
+					String nn = a.asNameExpr().getName().asString();
+					a.asNameExpr().setName(mapper.getPlaceholder(nn));
+				}
 			});
 		}
 		super.visit(n, arg);
