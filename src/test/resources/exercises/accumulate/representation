@@ -1,12 +1,12 @@
 class PLACEHOLDER_1
 {
 
-    static <T> List<T> PLACEHOLDER_2(List<T> PLACEHOLDER_6, Function<T, T> PLACEHOLDER_5) 
+    static <T> List<T> PLACEHOLDER_2(List<T> PLACEHOLDER_7, Function<T, T> PLACEHOLDER_4) 
     {
         List<T> PLACEHOLDER_3 = new ArrayList<>();
-        for (T PLACEHOLDER_4 : PLACEHOLDER_6) 
+        for (T PLACEHOLDER_5 : PLACEHOLDER_7) 
         {
-            PLACEHOLDER_3.add(PLACEHOLDER_5.apply(PLACEHOLDER_4));
+            PLACEHOLDER_3.add(PLACEHOLDER_6.apply(PLACEHOLDER_5));
         }
         return PLACEHOLDER_3;
     }

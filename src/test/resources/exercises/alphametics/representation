@@ -7,110 +7,110 @@ public class PLACEHOLDER_1
 
     PLACEHOLDER_1(String PLACEHOLDER_5) 
     {
-        String[] PLACEHOLDER_4 = PLACEHOLDER_5.split("==");
-        PLACEHOLDER_2 = PLACEHOLDER_7.stream(PLACEHOLDER_4[0].split("\\+")).map(String::new).map(String::trim).collect(PLACEHOLDER_6.collectingAndThen(PLACEHOLDER_6.toList(), Collections::unmodifiableList));
+        String[] PLACEHOLDER_4 = PLACEHOLDER_6.split("==");
+        PLACEHOLDER_2 = Arrays.stream(PLACEHOLDER_4[0].split("\\+")).map(String::new).map(String::trim).collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
         PLACEHOLDER_3 = PLACEHOLDER_4[1].trim();
     }
 
-    Map<Character, Integer> PLACEHOLDER_8() throws UnsolvablePuzzleException 
+    Map<PLACEHOLDER_7, Integer> PLACEHOLDER_8() throws UnsolvablePuzzleException 
     {
-        AlphameticsRecursion PLACEHOLDER_9 = new AlphameticsRecursion(getDistinctCharacters());
-        PLACEHOLDER_9.generate();
-        return PLACEHOLDER_9.get().orElseThrow(UnsolvablePuzzleException::new);
+        AlphameticsRecursion PLACEHOLDER_9 = new AlphameticsRecursion(PLACEHOLDER_10());
+        PLACEHOLDER_11.generate();
+        return PLACEHOLDER_11.get().orElseThrow(UnsolvablePuzzleException::new);
     }
 
     /**
      * Returns the list of distinct characters in this alphametic puzzle.
      */
-    private List<Character> PLACEHOLDER_10() 
+    private List<PLACEHOLDER_7> PLACEHOLDER_10() 
     {
-        Set<Character> PLACEHOLDER_11 = new LinkedHashSet<>();
-        PLACEHOLDER_2.forEach(PLACEHOLDER_12 -> PLACEHOLDER_11.addAll(toChar(PLACEHOLDER_12)));
-        PLACEHOLDER_11.addAll(toChar(PLACEHOLDER_3));
-        return new ArrayList<>(PLACEHOLDER_11);
+        Set<Character> PLACEHOLDER_12 = new LinkedHashSet<>();
+        PLACEHOLDER_2.forEach(PLACEHOLDER_14 -> PLACEHOLDER_12.addAll(PLACEHOLDER_13(PLACEHOLDER_15)));
+        PLACEHOLDER_12.addAll(PLACEHOLDER_13(PLACEHOLDER_3));
+        return new ArrayList<>(PLACEHOLDER_12);
     }
 
-    private List<Character> PLACEHOLDER_13(String PLACEHOLDER_13) 
+    private List<PLACEHOLDER_7> PLACEHOLDER_13(String PLACEHOLDER_13) 
     {
-        return PLACEHOLDER_13.chars().mapToObj(PLACEHOLDER_14 -> (char) PLACEHOLDER_14).collect(PLACEHOLDER_6.toList());
+        return PLACEHOLDER_17.chars().mapToObj(PLACEHOLDER_16 -> (char) PLACEHOLDER_16).collect(Collectors.toList());
     }
 
-    private class PLACEHOLDER_15
+    private class PLACEHOLDER_18
     {
 
-        private final List<Character> PLACEHOLDER_16;
+        private final List<Character> PLACEHOLDER_19;
 
-        private LinkedHashMap<Character, Integer> PLACEHOLDER_17;
+        private LinkedHashMap<Character, Integer> PLACEHOLDER_20;
 
-        private PLACEHOLDER_15(List<Character> PLACEHOLDER_16) 
+        private PLACEHOLDER_18(List<Character> PLACEHOLDER_19) 
         {
-            this.PLACEHOLDER_16 = PLACEHOLDER_16;
+            this.PLACEHOLDER_19 = PLACEHOLDER_19;
         }
 
-        private void PLACEHOLDER_18() 
+        private void PLACEHOLDER_21() 
         {
-            generate(new LinkedHashMap<>(), 0, new boolean[10]);
+            PLACEHOLDER_21(new LinkedHashMap<>(), 0, new boolean[10]);
         }
 
-        private void PLACEHOLDER_18(LinkedHashMap<Character, Integer> PLACEHOLDER_20, int PLACEHOLDER_19, boolean[] PLACEHOLDER_22) 
+        private void PLACEHOLDER_21(LinkedHashMap<Character, Integer> PLACEHOLDER_24, int PLACEHOLDER_22, boolean[] PLACEHOLDER_28) 
         {
-            if (PLACEHOLDER_19 == PLACEHOLDER_16.size()) 
+            if (PLACEHOLDER_22 == PLACEHOLDER_19.size()) 
             {
-                if (!isLeadingDigitZero(PLACEHOLDER_20) && isSumTally(PLACEHOLDER_20)) 
+                if (!PLACEHOLDER_23(PLACEHOLDER_25) && PLACEHOLDER_26(PLACEHOLDER_25)) 
                 {
-                    PLACEHOLDER_17 = new LinkedHashMap<>(PLACEHOLDER_20);
+                    PLACEHOLDER_20 = new LinkedHashMap<>(PLACEHOLDER_24);
                 }
                 return;
             }
-            for (int PLACEHOLDER_21 = 0; PLACEHOLDER_21 <= 9; PLACEHOLDER_21++) 
+            for (int PLACEHOLDER_27 = 0; PLACEHOLDER_27 <= 9; PLACEHOLDER_27++) 
             {
-                if (PLACEHOLDER_22[PLACEHOLDER_21]) 
+                if (PLACEHOLDER_28[PLACEHOLDER_27]) 
                 {
                     continue;
                 }
-                PLACEHOLDER_20.put(PLACEHOLDER_16.get(PLACEHOLDER_19), PLACEHOLDER_21);
-                PLACEHOLDER_22[PLACEHOLDER_21] = true;
-                generate(PLACEHOLDER_20, PLACEHOLDER_19 + 1, PLACEHOLDER_22);
-                PLACEHOLDER_22[PLACEHOLDER_21] = false;
+                PLACEHOLDER_25.put(PLACEHOLDER_19.get(PLACEHOLDER_22), PLACEHOLDER_27);
+                PLACEHOLDER_28[PLACEHOLDER_27] = true;
+                PLACEHOLDER_21(PLACEHOLDER_25, PLACEHOLDER_22 + 1, PLACEHOLDER_29);
+                PLACEHOLDER_28[PLACEHOLDER_27] = false;
             }
         }
 
-        private Optional<LinkedHashMap<Character, Integer>> PLACEHOLDER_23() 
+        private Optional<PLACEHOLDER_30> PLACEHOLDER_31() 
         {
-            return PLACEHOLDER_24.ofNullable(PLACEHOLDER_17);
+            return Optional.ofNullable(PLACEHOLDER_20);
         }
 
         /**
          * Returns true if the mapping letters to digits using {@code letterToDigit} will result in having zero as a
          * leading digit.
          */
-        private boolean PLACEHOLDER_25(Map<Character, Integer> PLACEHOLDER_29) 
+        private boolean PLACEHOLDER_23(Map<Character, Integer> PLACEHOLDER_34) 
         {
-            return PLACEHOLDER_29.keySet().stream().filter(PLACEHOLDER_28 -> PLACEHOLDER_29.get(PLACEHOLDER_28) == 0).filter(PLACEHOLDER_26 -> PLACEHOLDER_3.charAt(0) == PLACEHOLDER_26 || PLACEHOLDER_2.stream().map(PLACEHOLDER_12 -> PLACEHOLDER_12.charAt(0)).anyMatch(PLACEHOLDER_27 -> PLACEHOLDER_27 == PLACEHOLDER_26)).count() == 1;
+            return PLACEHOLDER_36.keySet().stream().filter(PLACEHOLDER_35 -> PLACEHOLDER_36.get(PLACEHOLDER_35) == 0).filter(PLACEHOLDER_32 -> PLACEHOLDER_3.charAt(0) == PLACEHOLDER_32 || PLACEHOLDER_2.stream().map(PLACEHOLDER_14 -> PLACEHOLDER_15.charAt(0)).anyMatch(PLACEHOLDER_33 -> PLACEHOLDER_33 == PLACEHOLDER_32)).count() == 1;
         }
 
         /**
          * Returns true if the {@code letterToDigit} solves the alphametic puzzle.
          */
-        private boolean PLACEHOLDER_30(Map<Character, Integer> PLACEHOLDER_29) 
+        private boolean PLACEHOLDER_26(Map<Character, Integer> PLACEHOLDER_34) 
         {
-            long PLACEHOLDER_31 = PLACEHOLDER_2.stream().mapToLong(PLACEHOLDER_12 -> mapToNumber(PLACEHOLDER_29, PLACEHOLDER_12)).sum();
-            long PLACEHOLDER_32 = mapToNumber(PLACEHOLDER_29, PLACEHOLDER_3);
-            return PLACEHOLDER_31 == PLACEHOLDER_32;
+            long PLACEHOLDER_37 = PLACEHOLDER_2.stream().mapToLong(PLACEHOLDER_14 -> PLACEHOLDER_38(PLACEHOLDER_36, PLACEHOLDER_15)).sum();
+            long PLACEHOLDER_39 = PLACEHOLDER_38(PLACEHOLDER_36, PLACEHOLDER_3);
+            return PLACEHOLDER_37 == PLACEHOLDER_39;
         }
 
         /**
          * Returns the long value of {@code word}, mapped using {@code letterToDigit}.
          */
-        private long PLACEHOLDER_33(Map<Character, Integer> PLACEHOLDER_29, String PLACEHOLDER_12) 
+        private long PLACEHOLDER_38(Map<Character, Integer> PLACEHOLDER_34, String PLACEHOLDER_14) 
         {
-            StringBuilder PLACEHOLDER_34 = new StringBuilder();
-            for (int PLACEHOLDER_21 = 0; PLACEHOLDER_21 < PLACEHOLDER_12.length(); PLACEHOLDER_21++) 
+            StringBuilder PLACEHOLDER_40 = new StringBuilder();
+            for (int PLACEHOLDER_27 = 0; PLACEHOLDER_27 < PLACEHOLDER_15.length(); PLACEHOLDER_27++) 
             {
-                int PLACEHOLDER_35 = PLACEHOLDER_29.get(PLACEHOLDER_12.charAt(PLACEHOLDER_21));
-                PLACEHOLDER_34.append(PLACEHOLDER_35);
+                int PLACEHOLDER_41 = PLACEHOLDER_36.get(PLACEHOLDER_15.charAt(PLACEHOLDER_27));
+                PLACEHOLDER_40.append(PLACEHOLDER_41);
             }
-            return PLACEHOLDER_36.parseLong(PLACEHOLDER_34.toString());
+            return Long.parseLong(PLACEHOLDER_40.toString());
         }
     }
 }
