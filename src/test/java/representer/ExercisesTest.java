@@ -66,11 +66,8 @@ public class ExercisesTest {
     @Test
     public void allergiesRepresentation() throws Exception {
     	String testFolder = "exercises/allergies";
-    	String sourceContent = testUtils.getResourceContent(testFolder + "/Allergies.java");
     	List<String> sources = testUtils.getResourceContentFromFolder(testFolder);
-    	
     	String representation = sources.stream().map(s -> representer.generate(s, fakeRepresentationSerializator, fakeMappingSerializator)).collect(Collectors.joining());
-    	//String representation = representer.generate(sourceContent, fakeRepresentationSerializator, fakeMappingSerializator);
     	String expectedRepresentation = testUtils.getResourceContent(testFolder + "/representation");
     	System.out.println(representation);
     	Assertions.assertThat(representation).isEqualTo(expectedRepresentation);
