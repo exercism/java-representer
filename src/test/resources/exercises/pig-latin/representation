@@ -1,13 +1,13 @@
 class PLACEHOLDER_1
 {
 
-    private List<Character> PLACEHOLDER_2 = PLACEHOLDER_3.asList('a', 'e', 'i', 'o', 'u');
+    private List<Character> PLACEHOLDER_2 = Arrays.asList('a', 'e', 'i', 'o', 'u');
 
-    String PLACEHOLDER_4(String PLACEHOLDER_6) 
+    String PLACEHOLDER_3(String PLACEHOLDER_5) 
     {
-        if (PLACEHOLDER_6.chars().anyMatch(PLACEHOLDER_5 -> PLACEHOLDER_2.contains((char) PLACEHOLDER_5))) 
+        if (PLACEHOLDER_6.chars().anyMatch(PLACEHOLDER_4 -> PLACEHOLDER_2.contains((char) PLACEHOLDER_4))) 
         {
-            return PLACEHOLDER_6 + "ay";
+            return PLACEHOLDER_5 + "ay";
         }
         return "";
     }

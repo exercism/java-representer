@@ -2,6 +2,7 @@ package representer;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
@@ -34,8 +35,8 @@ public class ExercisesTest {
     @Test
     public void accumulateRepresentation() throws Exception {
     	String testFolder = "exercises/accumulate";
-    	String sourceContent = testUtils.getResourceContent(testFolder + "/Accumulate.java");
-    	String representation = representer.generate(sourceContent, fakeRepresentationSerializator, fakeMappingSerializator);
+    	List<String> sources = testUtils.getResourceContentFromFolder(testFolder);
+    	String representation = sources.stream().map(s -> representer.generate(s, fakeRepresentationSerializator, fakeMappingSerializator)).collect(Collectors.joining());
     	String expectedRepresentation = testUtils.getResourceContent(testFolder + "/representation");
     	System.out.println(representation);
     	Assertions.assertThat(representation).isEqualTo(expectedRepresentation);
@@ -44,8 +45,8 @@ public class ExercisesTest {
     @Test
     public void acronymRepresentation() throws Exception {
     	String testFolder = "exercises/acronym";
-    	String sourceContent = testUtils.getResourceContent(testFolder + "/Acronym.java");
-    	String representation = representer.generate(sourceContent, fakeRepresentationSerializator, fakeMappingSerializator);
+    	List<String> sources = testUtils.getResourceContentFromFolder(testFolder);
+    	String representation = sources.stream().map(s -> representer.generate(s, fakeRepresentationSerializator, fakeMappingSerializator)).collect(Collectors.joining());
     	String expectedRepresentation = testUtils.getResourceContent(testFolder + "/representation");
     	System.out.println(representation);
     	Assertions.assertThat(representation).isEqualTo(expectedRepresentation);
@@ -54,8 +55,8 @@ public class ExercisesTest {
     @Test
     public void affineCipherRepresentation() throws Exception {
     	String testFolder = "exercises/affine-cipher";
-    	String sourceContent = testUtils.getResourceContent(testFolder + "/AffineCipher.java");
-    	String representation = representer.generate(sourceContent, fakeRepresentationSerializator, fakeMappingSerializator);
+    	List<String> sources = testUtils.getResourceContentFromFolder(testFolder);
+    	String representation = sources.stream().map(s -> representer.generate(s, fakeRepresentationSerializator, fakeMappingSerializator)).collect(Collectors.joining());
     	String expectedRepresentation = testUtils.getResourceContent(testFolder + "/representation");
     	System.out.println(representation);
     	Assertions.assertThat(representation).isEqualTo(expectedRepresentation);
@@ -64,8 +65,8 @@ public class ExercisesTest {
     @Test
     public void allergiesRepresentation() throws Exception {
     	String testFolder = "exercises/allergies";
-    	String sourceContent = testUtils.getResourceContent(testFolder + "/Allergies.java");
-    	String representation = representer.generate(sourceContent, fakeRepresentationSerializator, fakeMappingSerializator);
+    	List<String> sources = testUtils.getResourceContentFromFolder(testFolder);
+    	String representation = sources.stream().map(s -> representer.generate(s, fakeRepresentationSerializator, fakeMappingSerializator)).collect(Collectors.joining());
     	String expectedRepresentation = testUtils.getResourceContent(testFolder + "/representation");
     	System.out.println(representation);
     	Assertions.assertThat(representation).isEqualTo(expectedRepresentation);
@@ -74,8 +75,8 @@ public class ExercisesTest {
     @Test
     public void allYourBaseRepresentation() throws Exception {
     	String testFolder = "exercises/all-your-base";
-    	String sourceContent = testUtils.getResourceContent(testFolder + "/BaseConverter.java");
-    	String representation = representer.generate(sourceContent, fakeRepresentationSerializator, fakeMappingSerializator);
+    	List<String> sources = testUtils.getResourceContentFromFolder(testFolder);
+    	String representation = sources.stream().map(s -> representer.generate(s, fakeRepresentationSerializator, fakeMappingSerializator)).collect(Collectors.joining());
     	String expectedRepresentation = testUtils.getResourceContent(testFolder + "/representation");
     	System.out.println(representation);
     	Assertions.assertThat(representation).isEqualTo(expectedRepresentation);
@@ -84,8 +85,8 @@ public class ExercisesTest {
     @Test
     public void alphameticsRepresentation() throws Exception {
     	String testFolder = "exercises/alphametics";
-    	String sourceContent = testUtils.getResourceContent(testFolder + "/Alphametics.java");
-    	String representation = representer.generate(sourceContent, fakeRepresentationSerializator, fakeMappingSerializator);
+    	List<String> sources = testUtils.getResourceContentFromFolder(testFolder);
+    	String representation = sources.stream().map(s -> representer.generate(s, fakeRepresentationSerializator, fakeMappingSerializator)).collect(Collectors.joining());
     	String expectedRepresentation = testUtils.getResourceContent(testFolder + "/representation");
     	System.out.println(representation);
     	Assertions.assertThat(representation).isEqualTo(expectedRepresentation);
@@ -94,8 +95,8 @@ public class ExercisesTest {
     @Test
     public void helloWorldRepresentation() throws Exception {
     	String testFolder = "exercises/hello-world";
-    	String sourceContent = testUtils.getResourceContent(testFolder + "/Greeter.java");
-    	String representation = representer.generate(sourceContent, fakeRepresentationSerializator, fakeMappingSerializator);
+    	List<String> sources = testUtils.getResourceContentFromFolder(testFolder);
+    	String representation = sources.stream().map(s -> representer.generate(s, fakeRepresentationSerializator, fakeMappingSerializator)).collect(Collectors.joining());
     	String expectedRepresentation = testUtils.getResourceContent(testFolder + "/representation");
     	System.out.println(representation);
     	Assertions.assertThat(representation).isEqualTo(expectedRepresentation);
@@ -104,8 +105,8 @@ public class ExercisesTest {
     @Test
     public void pigLatinRepresentation() throws Exception {
     	String testFolder = "exercises/pig-latin";
-    	String sourceContent = testUtils.getResourceContent(testFolder + "/PigLatinTranslator.java");
-    	String representation = representer.generate(sourceContent, fakeRepresentationSerializator, fakeMappingSerializator);
+    	List<String> sources = testUtils.getResourceContentFromFolder(testFolder);
+    	String representation = sources.stream().map(s -> representer.generate(s, fakeRepresentationSerializator, fakeMappingSerializator)).collect(Collectors.joining());
     	String expectedRepresentation = testUtils.getResourceContent(testFolder + "/representation");
     	System.out.println(representation);
     	Assertions.assertThat(representation).isEqualTo(expectedRepresentation);
@@ -114,8 +115,8 @@ public class ExercisesTest {
     @Test
     public void raindropsRepresentation() throws Exception {
     	String testFolder = "exercises/raindrops";
-    	String sourceContent = testUtils.getResourceContent(testFolder + "/RaindropConverter.java");
-    	String representation = representer.generate(sourceContent, fakeRepresentationSerializator, fakeMappingSerializator);
+    	List<String> sources = testUtils.getResourceContentFromFolder(testFolder);
+    	String representation = sources.stream().map(s -> representer.generate(s, fakeRepresentationSerializator, fakeMappingSerializator)).collect(Collectors.joining());
     	String expectedRepresentation = testUtils.getResourceContent(testFolder + "/representation");
     	System.out.println(representation);
     	Assertions.assertThat(representation).isEqualTo(expectedRepresentation);

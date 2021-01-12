@@ -7,69 +7,69 @@ class PLACEHOLDER_1
 
     private static final int PLACEHOLDER_4 = 97;
 
-    private enum Mode {
+    private enum PLACEHOLDER_5 {
 
-        ENCODE, DECODE
+        PLACEHOLDER_6, PLACEHOLDER_7
     }
 
-    String PLACEHOLDER_5(String PLACEHOLDER_6, int PLACEHOLDER_7, int PLACEHOLDER_8) 
+    String PLACEHOLDER_8(String PLACEHOLDER_11, int PLACEHOLDER_12, int PLACEHOLDER_13) 
     {
-        return splitIntoFiveLetterWords(translate(PLACEHOLDER_6, PLACEHOLDER_7, PLACEHOLDER_8, PLACEHOLDER_10.PLACEHOLDER_9));
+        return PLACEHOLDER_9(PLACEHOLDER_10(PLACEHOLDER_14, PLACEHOLDER_15, PLACEHOLDER_16, PLACEHOLDER_5.PLACEHOLDER_17));
     }
 
-    String PLACEHOLDER_11(String PLACEHOLDER_12, int PLACEHOLDER_7, int PLACEHOLDER_8) 
+    String PLACEHOLDER_18(String PLACEHOLDER_19, int PLACEHOLDER_12, int PLACEHOLDER_13) 
     {
-        return translate(PLACEHOLDER_12, PLACEHOLDER_7, PLACEHOLDER_8, PLACEHOLDER_10.PLACEHOLDER_13);
+        return PLACEHOLDER_10(PLACEHOLDER_20, PLACEHOLDER_15, PLACEHOLDER_16, PLACEHOLDER_5.PLACEHOLDER_21);
     }
 
-    private static int PLACEHOLDER_14(int PLACEHOLDER_7) 
+    private static int PLACEHOLDER_22(int PLACEHOLDER_12) 
     {
-        int PLACEHOLDER_15 = PLACEHOLDER_16.floorMod(PLACEHOLDER_7, PLACEHOLDER_3);
-        for (int PLACEHOLDER_17 = 1; PLACEHOLDER_17 < PLACEHOLDER_3; PLACEHOLDER_17++) 
+        int PLACEHOLDER_23 = Math.floorMod(PLACEHOLDER_12, PLACEHOLDER_3);
+        for (int PLACEHOLDER_24 = 1; PLACEHOLDER_24 < PLACEHOLDER_3; PLACEHOLDER_24++) 
         {
-            if (PLACEHOLDER_16.floorMod(PLACEHOLDER_15 * PLACEHOLDER_17, PLACEHOLDER_3) == 1) 
+            if (Math.floorMod(PLACEHOLDER_23 * PLACEHOLDER_24, PLACEHOLDER_3) == 1) 
             {
-                return PLACEHOLDER_17;
+                return PLACEHOLDER_25;
             }
         }
         return 1;
     }
 
-    private static String PLACEHOLDER_18(String PLACEHOLDER_21) 
+    private static String PLACEHOLDER_9(String PLACEHOLDER_27) 
     {
-        List<String> PLACEHOLDER_19 = new ArrayList<>();
-        for (int PLACEHOLDER_20 = 0; PLACEHOLDER_20 < PLACEHOLDER_21.length(); PLACEHOLDER_20 += PLACEHOLDER_2) 
+        List<String> PLACEHOLDER_26 = new ArrayList<>();
+        for (int PLACEHOLDER_28 = 0; PLACEHOLDER_28 < PLACEHOLDER_29.length(); PLACEHOLDER_28 += PLACEHOLDER_2) 
         {
-            PLACEHOLDER_19.add(PLACEHOLDER_21.substring(PLACEHOLDER_20, PLACEHOLDER_16.min(PLACEHOLDER_21.length(), PLACEHOLDER_20 + PLACEHOLDER_2)));
+            PLACEHOLDER_26.add(PLACEHOLDER_29.substring(PLACEHOLDER_28, Math.min(PLACEHOLDER_29.length(), PLACEHOLDER_28 + PLACEHOLDER_2)));
         }
-        return PLACEHOLDER_22.join(" ", PLACEHOLDER_19);
+        return String.join(" ", PLACEHOLDER_26);
     }
 
-    private static String PLACEHOLDER_23(String PLACEHOLDER_21, int PLACEHOLDER_7, int PLACEHOLDER_8, Mode PLACEHOLDER_28) 
+    private static String PLACEHOLDER_10(String PLACEHOLDER_27, int PLACEHOLDER_12, int PLACEHOLDER_13, Mode PLACEHOLDER_34) 
     {
-        int PLACEHOLDER_24 = modInverse(PLACEHOLDER_7);
-        if (PLACEHOLDER_24 == 1) 
+        int PLACEHOLDER_30 = PLACEHOLDER_22(PLACEHOLDER_15);
+        if (PLACEHOLDER_30 == 1) 
         {
             throw new IllegalArgumentException("Error: keyA and alphabet size must be coprime.");
         }
-        StringBuilder PLACEHOLDER_25 = new StringBuilder();
-        PLACEHOLDER_21.chars().filter(Character::isLetterOrDigit).map(Character::toLowerCase).forEach(PLACEHOLDER_27 -> 
+        StringBuilder PLACEHOLDER_31 = new StringBuilder();
+        PLACEHOLDER_29.chars().filter(Character::isLetterOrDigit).map(Character::toLowerCase).forEach(PLACEHOLDER_33 -> 
         {
-            int PLACEHOLDER_26 = PLACEHOLDER_27 - PLACEHOLDER_4;
-            if (PLACEHOLDER_26 < 0) 
+            int PLACEHOLDER_32 = PLACEHOLDER_33 - PLACEHOLDER_4;
+            if (PLACEHOLDER_32 < 0) 
             {
-                PLACEHOLDER_25.appendCodePoint(PLACEHOLDER_27);
+                PLACEHOLDER_31.appendCodePoint(PLACEHOLDER_33);
             } else 
             {
-                if (PLACEHOLDER_28 == PLACEHOLDER_10.PLACEHOLDER_9) 
+                if (PLACEHOLDER_34 == PLACEHOLDER_5.PLACEHOLDER_17) 
                 {
-                    PLACEHOLDER_25.appendCodePoint(PLACEHOLDER_4 + PLACEHOLDER_16.floorMod(PLACEHOLDER_7 * PLACEHOLDER_26 + PLACEHOLDER_8, PLACEHOLDER_3));
-                } else if (PLACEHOLDER_28 == PLACEHOLDER_10.PLACEHOLDER_13) 
+                    PLACEHOLDER_31.appendCodePoint(PLACEHOLDER_4 + Math.floorMod(PLACEHOLDER_12 * PLACEHOLDER_32 + PLACEHOLDER_13, PLACEHOLDER_3));
+                } else if (PLACEHOLDER_34 == PLACEHOLDER_5.PLACEHOLDER_21) 
                 {
-                    PLACEHOLDER_25.appendCodePoint(PLACEHOLDER_4 + PLACEHOLDER_16.floorMod(PLACEHOLDER_24 * (PLACEHOLDER_26 - PLACEHOLDER_8), PLACEHOLDER_3));
+                    PLACEHOLDER_31.appendCodePoint(PLACEHOLDER_4 + Math.floorMod(PLACEHOLDER_30 * (PLACEHOLDER_32 - PLACEHOLDER_13), PLACEHOLDER_3));
                 }
             }
         });
-        return PLACEHOLDER_25.toString();
+        return PLACEHOLDER_31.toString();
     }
 }
