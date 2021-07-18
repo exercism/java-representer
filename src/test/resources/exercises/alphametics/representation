@@ -19,9 +19,6 @@ public class PLACEHOLDER_1
         return PLACEHOLDER_11.get().orElseThrow(UnsolvablePuzzleException::new);
     }
 
-    /**
-     * Returns the list of distinct characters in this alphametic puzzle.
-     */
     private List<PLACEHOLDER_7> PLACEHOLDER_10() 
     {
         Set<Character> PLACEHOLDER_12 = new LinkedHashSet<>();
@@ -80,18 +77,11 @@ public class PLACEHOLDER_1
             return Optional.ofNullable(PLACEHOLDER_20);
         }
 
-        /**
-         * Returns true if the mapping letters to digits using {@code letterToDigit} will result in having zero as a
-         * leading digit.
-         */
         private boolean PLACEHOLDER_23(Map<Character, Integer> PLACEHOLDER_34) 
         {
             return PLACEHOLDER_36.keySet().stream().filter(PLACEHOLDER_35 -> PLACEHOLDER_36.get(PLACEHOLDER_35) == 0).filter(PLACEHOLDER_32 -> PLACEHOLDER_3.charAt(0) == PLACEHOLDER_32 || PLACEHOLDER_2.stream().map(PLACEHOLDER_14 -> PLACEHOLDER_15.charAt(0)).anyMatch(PLACEHOLDER_33 -> PLACEHOLDER_33 == PLACEHOLDER_32)).count() == 1;
         }
 
-        /**
-         * Returns true if the {@code letterToDigit} solves the alphametic puzzle.
-         */
         private boolean PLACEHOLDER_26(Map<Character, Integer> PLACEHOLDER_34) 
         {
             long PLACEHOLDER_37 = PLACEHOLDER_2.stream().mapToLong(PLACEHOLDER_14 -> PLACEHOLDER_38(PLACEHOLDER_36, PLACEHOLDER_15)).sum();
@@ -99,9 +89,6 @@ public class PLACEHOLDER_1
             return PLACEHOLDER_37 == PLACEHOLDER_39;
         }
 
-        /**
-         * Returns the long value of {@code word}, mapped using {@code letterToDigit}.
-         */
         private long PLACEHOLDER_38(Map<Character, Integer> PLACEHOLDER_34, String PLACEHOLDER_14) 
         {
             StringBuilder PLACEHOLDER_40 = new StringBuilder();
