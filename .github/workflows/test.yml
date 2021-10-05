@@ -3,7 +3,7 @@ name: Java CI
 on: [pull_request]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -13,5 +13,5 @@ jobs:
         with:
           java-version: '8'
           distribution: 'adopt'
-      - name: Build with Maven
-        run: mvn --batch-mode verify
+      - name: Test with Maven
+        run: mvn --batch-mode test
