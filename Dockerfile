@@ -3,7 +3,7 @@ WORKDIR /app
 COPY . /app 
 RUN mvn package
 
-FROM openjdk:11
+FROM openjdk:11-jdk-slim
 WORKDIR /opt/representer
 COPY ./bin/generate.sh bin/generate.sh
 COPY --from=build /app/target/java-representer.jar .
