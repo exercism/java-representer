@@ -5,3 +5,5 @@
 .gitattributes
 .dockerignore
 Dockerfile
+bin/generate-test-data.sh
+src/test/
