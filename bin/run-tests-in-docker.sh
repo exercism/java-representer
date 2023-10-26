@@ -13,7 +13,7 @@
 # ./bin/run-tests-in-docker.sh
 
 # Build the Docker image
-docker build --rm -t exercism/representer .
+docker build --rm -t exercism/java-representer .
 
 # Run the Docker image using the settings mimicking the production environment
 docker run \
@@ -25,4 +25,4 @@ docker run \
     --volume "${PWD}/bin/run-tests.sh:/opt/representer/bin/run-tests.sh" \
     --workdir /opt/representer \
     --entrypoint /opt/representer/bin/run-tests.sh \
-    exercism/representer
+    exercism/java-representer
