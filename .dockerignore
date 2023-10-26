@@ -6,4 +6,8 @@
 .dockerignore
 Dockerfile
 bin/generate-test-data.sh
+bin/run-in-docker.sh
+bin/run-tests-in-docker.sh
+bin/run-tests.sh
 src/test/
+tests/
