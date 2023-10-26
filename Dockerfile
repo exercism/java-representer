@@ -5,6 +5,6 @@ RUN mvn package
 
 FROM openjdk:11-jdk-slim
 WORKDIR /opt/representer
-COPY ./bin/generate.sh bin/generate.sh
+COPY ./bin/run.sh bin/run.sh
 COPY --from=build /app/target/java-representer.jar .
-ENTRYPOINT ["sh", "/opt/representer/bin/generate.sh"]
+ENTRYPOINT ["sh", "/opt/representer/bin/run.sh"]
