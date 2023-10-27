@@ -1,14 +1,5 @@
 package representer;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParserConfiguration;
 import com.github.javaparser.ast.CompilationUnit;
@@ -16,10 +7,16 @@ import com.github.javaparser.ast.visitor.ModifierVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 import com.github.javaparser.symbolsolver.JavaSymbolSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.CombinedTypeSolver;
-import com.github.javaparser.symbolsolver.resolution.typesolvers.JavaParserTypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.ReflectionTypeSolver;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import representer.normalizer.PlaceholderNormalizer;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Representer {
 
@@ -57,8 +54,7 @@ public class Representer {
     }
 
     private JavaParser parser() {
-        CombinedTypeSolver comb = new CombinedTypeSolver(new ReflectionTypeSolver(),
-                new JavaParserTypeSolver("src/test/resources"));
+        CombinedTypeSolver comb = new CombinedTypeSolver(new ReflectionTypeSolver());
         JavaSymbolSolver solver = new JavaSymbolSolver(comb);
         ParserConfiguration parserConfiguration =
                 new ParserConfiguration().setSymbolResolver(solver);

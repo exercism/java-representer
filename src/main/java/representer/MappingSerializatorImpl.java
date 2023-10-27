@@ -12,7 +12,7 @@ public class MappingSerializatorImpl implements MappingSerializator {
     private String mappingFilePath;
     private FileWriter fileWriter;
 
-    private static final String MAPPING_FILE = "mapping.txt";
+    private static final String MAPPING_FILE = "mapping.json";
 
     public MappingSerializatorImpl(String folderPath) {
         this.folderPath = folderPath;

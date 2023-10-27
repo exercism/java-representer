@@ -1,5 +1,11 @@
 package representer;
 
+import com.github.javaparser.ast.visitor.ModifierVisitor;
+import com.github.javaparser.ast.visitor.VoidVisitor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import representer.normalizer.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,18 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.github.javaparser.ast.visitor.ModifierVisitor;
-import com.github.javaparser.ast.visitor.VoidVisitor;
-
-import representer.normalizer.BlockNormalizer;
-import representer.normalizer.CommentNormalizer;
-import representer.normalizer.ImportNormalizer;
-import representer.normalizer.PackageNormalizer;
-import representer.normalizer.PlaceholderNormalizer;
 
 public class RepresenterCli {
 
@@ -51,7 +45,7 @@ public class RepresenterCli {
 
 
         Representer representer = new Representer(modifierNormalizers, voidNormalizers);
-        final String sourceFolder = contextPath + slug + "/" + JAVA_PROJECT_STRUCTURE;
+        final String sourceFolder = contextPath + JAVA_PROJECT_STRUCTURE;
         logger.info("Search for source file into folder {}", sourceFolder);
         String[] sources = new File(sourceFolder).list();
         if (sources == null) {
