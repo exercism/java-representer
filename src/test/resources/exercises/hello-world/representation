@@ -1,8 +1,6 @@
-class PLACEHOLDER_1
-{
+class PLACEHOLDER_1 {
 
-    String PLACEHOLDER_2() 
-    {
+    String PLACEHOLDER_2() {
         return "Hello, World!";
     }
 }

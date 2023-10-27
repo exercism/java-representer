@@ -5,6 +5,8 @@ import com.github.javaparser.ParserConfiguration;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.visitor.ModifierVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitor;
+import com.github.javaparser.printer.DefaultPrettyPrinterVisitor;
+import com.github.javaparser.printer.configuration.DefaultPrinterConfiguration;
 import com.github.javaparser.symbolsolver.JavaSymbolSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.CombinedTypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.ReflectionTypeSolver;
@@ -45,10 +47,9 @@ public class Representer {
         CompilationUnit unit = parser().parse(sourceContent).getResult().get();
         voidNormalizers.forEach(n -> unit.accept(n, null));
         genericNormalizers.forEach(n -> unit.accept(n, null));
-        RepresenterPrintVisitor representerPrintVisitor = new RepresenterPrintVisitor(
-                CompilationUnit.getToStringPrettyPrinterConfiguration());
-        unit.accept(representerPrintVisitor, null);
-        String representation = representerPrintVisitor.toString();
+        DefaultPrettyPrinterVisitor visitor = new DefaultPrettyPrinterVisitor(new DefaultPrinterConfiguration());
+        unit.accept(visitor, null);
+        String representation = visitor.toString();
         representationSerializator.serialize(representation);
         return representation;
     }

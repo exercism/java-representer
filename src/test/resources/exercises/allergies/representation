@@ -11,33 +11,27 @@ enum PLACEHOLDER_1 {
 
     private final int PLACEHOLDER_10;
 
-    PLACEHOLDER_1(int PLACEHOLDER_10) 
-    {
+    PLACEHOLDER_1(int PLACEHOLDER_10) {
         this.PLACEHOLDER_10 = PLACEHOLDER_10;
     }
 
-    int PLACEHOLDER_11() 
-    {
+    int PLACEHOLDER_11() {
         return PLACEHOLDER_12;
     }
 }
-class PLACEHOLDER_13
-{
+class PLACEHOLDER_13 {
 
     private int PLACEHOLDER_10;
 
-    PLACEHOLDER_13(int PLACEHOLDER_10) 
-    {
+    PLACEHOLDER_13(int PLACEHOLDER_10) {
         this.PLACEHOLDER_10 = PLACEHOLDER_10;
     }
 
-    List<PLACEHOLDER_1> PLACEHOLDER_14() 
-    {
+    List<PLACEHOLDER_1> PLACEHOLDER_14() {
         return EnumSet.allOf(Allergen.class).stream().filter(this::isAllergicTo).collect(Collectors.toList());
     }
 
-    boolean PLACEHOLDER_15(Allergen PLACEHOLDER_16) 
-    {
+    boolean PLACEHOLDER_15(Allergen PLACEHOLDER_16) {
         return (PLACEHOLDER_10 & PLACEHOLDER_17.getScore()) != 0;
     }
 }
