@@ -1,23 +1,17 @@
-class PLACEHOLDER_1
-{
+class PLACEHOLDER_1 {
 
-    String PLACEHOLDER_2(int PLACEHOLDER_4) 
-    {
+    String PLACEHOLDER_2(int PLACEHOLDER_4) {
         StringBuffer PLACEHOLDER_3 = new StringBuffer();
-        if (PLACEHOLDER_4 % 3 == 0) 
-        {
+        if (PLACEHOLDER_4 % 3 == 0) {
             PLACEHOLDER_3.append("Pling");
         }
-        if (PLACEHOLDER_4 % 5 == 0) 
-        {
+        if (PLACEHOLDER_4 % 5 == 0) {
             PLACEHOLDER_3.append("Plang");
         }
-        if (PLACEHOLDER_4 % 7 == 0) 
-        {
+        if (PLACEHOLDER_4 % 7 == 0) {
             PLACEHOLDER_3.append("Plong");
         }
-        if (PLACEHOLDER_3.length() == 0) 
-        {
+        if (PLACEHOLDER_3.length() == 0) {
             PLACEHOLDER_3.append(PLACEHOLDER_4);
         }
         return PLACEHOLDER_3.toString();
