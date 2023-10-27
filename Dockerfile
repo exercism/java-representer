@@ -5,7 +5,7 @@ COPY . /app
 
 RUN gradle -i --stacktrace clean build shadowJar
 
-FROM eclipse-temurin:17
+FROM eclipse-temurin:21
 
 WORKDIR /opt/representer
 COPY ./bin/run.sh bin/run.sh
