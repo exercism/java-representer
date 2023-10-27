@@ -1,12 +1,12 @@
 class PLACEHOLDER_1
 {
 
-    public PLACEHOLDER_1(String PLACEHOLDER_2)
+    public PLACEHOLDER_1(String PLACEHOLDER_2) 
     {
         throw new UnsupportedOperationException("Please implement the Anagram(String word) constructor");
     }
 
-    public List<PLACEHOLDER_3> PLACEHOLDER_4(List<String> PLACEHOLDER_5)
+    public List<PLACEHOLDER_3> PLACEHOLDER_4(List<String> PLACEHOLDER_5) 
     {
         throw new UnsupportedOperationException("Please implement the match() method");
     }
