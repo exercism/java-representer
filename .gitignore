@@ -7,3 +7,5 @@ tests/**/*/representation.json
 tests/**/*/mapping.json
 
 .idea
+.gradle
+**/build/

@@ -15,14 +15,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
-      - name: Set up JDK 8
+      - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: "8"
-          distribution: "adopt"
-          cache: maven
-      - name: Test with Maven
-        run: mvn --batch-mode test
+          java-version: "17"
+          distribution: "temurin"
+      - name: Test with Gradle
+        run: ./gradlew --no-daemon --continue test
+      - name: Create test summary
+        uses: test-summary/action@62bc5c68de2a6a0d02039763b8c754569df99e3f
+        with:
+          paths: "**/build/test-results/test/*.xml"
+        if: always()
 
   smoke_tests:
     name: Smoke tests
