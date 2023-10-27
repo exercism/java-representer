@@ -1,10 +1,14 @@
-FROM maven:3.6.3-jdk-11-slim AS build
-WORKDIR /app
-COPY . /app 
-RUN mvn package
+FROM gradle:8.4-jdk11 AS build
 
-FROM openjdk:11-jdk-slim
+WORKDIR /app
+COPY . /app
+
+RUN gradle -i clean build
+RUN gradle -i shadowJar \
+    && cp build/libs/java-representer.jar .
+
+FROM eclipse-temurin:11
 WORKDIR /opt/representer
 COPY ./bin/run.sh bin/run.sh
-COPY --from=build /app/target/java-representer.jar .
+COPY --from=build /app/build/libs/java-representer.jar .
 ENTRYPOINT ["sh", "/opt/representer/bin/run.sh"]
