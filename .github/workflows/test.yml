@@ -21,7 +21,7 @@ jobs:
           java-version: "17"
           distribution: "temurin"
       - name: Test with Gradle
-        run: ./gradlew test --continue
+        run: ./gradlew --no-daemon --continue test
       - name: Create test summary
         uses: test-summary/action@62bc5c68de2a6a0d02039763b8c754569df99e3f
         with:
