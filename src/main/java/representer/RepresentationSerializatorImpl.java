@@ -6,7 +6,7 @@ import java.io.IOException;
 public class RepresentationSerializatorImpl implements RepresentationSerializator {
     private static final String REPRESENTATION_FILE = "representation.txt";
     private static final String REPRESENTATION_METADATA_FILE = "representation.json";
-    private static final String REPRESENTATION_METADATA = "{\"version\": 1}\n";
+    private static final String REPRESENTATION_METADATA = "{\"version\": 1}";
     private final FileWriter fileWriter;
     private final FileWriter metadataFileWriter;
 
