@@ -1,11 +1,11 @@
-FROM gradle:8.4-jdk17 AS build
+FROM gradle:8.5-jdk21 AS build
 
 WORKDIR /app
 COPY . /app
 
 RUN gradle -i --stacktrace clean build shadowJar
 
-FROM eclipse-temurin:17
+FROM eclipse-temurin:21
 
 WORKDIR /opt/representer
 COPY ./bin/run.sh bin/run.sh
