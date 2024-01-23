@@ -1,0 +1,26 @@
+enum PLACEHOLDER_1 {
+
+    PLACEHOLDER_2, PLACEHOLDER_3, PLACEHOLDER_4, PLACEHOLDER_5
+}
+
+final class PLACEHOLDER_6 {
+
+    private static final int PLACEHOLDER_7 = 4;
+
+    List<PLACEHOLDER_1> PLACEHOLDER_8(final int PLACEHOLDER_11) {
+        final List<Signal> PLACEHOLDER_9 = new ArrayList<>();
+        for (final Signal PLACEHOLDER_12 : PLACEHOLDER_16.values()) {
+            if (PLACEHOLDER_10(PLACEHOLDER_13.ordinal(), PLACEHOLDER_14)) {
+                PLACEHOLDER_15.add(PLACEHOLDER_12);
+            }
+        }
+        if (PLACEHOLDER_10(PLACEHOLDER_17, PLACEHOLDER_14)) {
+            Collections.reverse(PLACEHOLDER_9);
+        }
+        return PLACEHOLDER_15;
+    }
+
+    private boolean PLACEHOLDER_10(final int PLACEHOLDER_18, final int PLACEHOLDER_11) {
+        return ((PLACEHOLDER_11 >> PLACEHOLDER_18) & 1) == 1;
+    }
+}

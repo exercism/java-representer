@@ -1,37 +1,37 @@
-enum PLACEHOLDER_1 {
+class PLACEHOLDER_1 {
 
-    PLACEHOLDER_2(1),
-    PLACEHOLDER_3(2),
-    PLACEHOLDER_4(4),
-    PLACEHOLDER_5(8),
-    PLACEHOLDER_6(16),
-    PLACEHOLDER_7(32),
-    PLACEHOLDER_8(64),
-    PLACEHOLDER_9(128);
+    private int PLACEHOLDER_2;
 
-    private final int PLACEHOLDER_10;
-
-    PLACEHOLDER_1(int PLACEHOLDER_10) {
-        this.PLACEHOLDER_10 = PLACEHOLDER_10;
+    PLACEHOLDER_1(int PLACEHOLDER_2) {
+        this.PLACEHOLDER_2 = PLACEHOLDER_2;
     }
 
-    int PLACEHOLDER_11() {
-        return PLACEHOLDER_12;
-    }
-}
-class PLACEHOLDER_13 {
-
-    private int PLACEHOLDER_10;
-
-    PLACEHOLDER_13(int PLACEHOLDER_10) {
-        this.PLACEHOLDER_10 = PLACEHOLDER_10;
-    }
-
-    List<PLACEHOLDER_1> PLACEHOLDER_14() {
+    List<PLACEHOLDER_3> PLACEHOLDER_4() {
         return EnumSet.allOf(Allergen.class).stream().filter(this::isAllergicTo).collect(Collectors.toList());
     }
 
-    boolean PLACEHOLDER_15(Allergen PLACEHOLDER_16) {
-        return (PLACEHOLDER_10 & PLACEHOLDER_17.getScore()) != 0;
+    boolean PLACEHOLDER_5(Allergen PLACEHOLDER_6) {
+        return (PLACEHOLDER_2 & PLACEHOLDER_7.getScore()) != 0;
+    }
+}
+enum PLACEHOLDER_3 {
+
+    PLACEHOLDER_8(1),
+    PLACEHOLDER_9(2),
+    PLACEHOLDER_10(4),
+    PLACEHOLDER_11(8),
+    PLACEHOLDER_12(16),
+    PLACEHOLDER_13(32),
+    PLACEHOLDER_14(64),
+    PLACEHOLDER_15(128);
+
+    private final int PLACEHOLDER_2;
+
+    PLACEHOLDER_3(int PLACEHOLDER_2) {
+        this.PLACEHOLDER_2 = PLACEHOLDER_2;
+    }
+
+    int PLACEHOLDER_16() {
+        return PLACEHOLDER_17;
     }
 }
