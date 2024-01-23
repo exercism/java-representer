@@ -1,19 +1,7 @@
 package representer.normalizer;
 
-import java.util.Map;
-import java.util.Optional;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.github.javaparser.ast.NodeList;
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
-import com.github.javaparser.ast.body.ConstructorDeclaration;
-import com.github.javaparser.ast.body.EnumConstantDeclaration;
-import com.github.javaparser.ast.body.EnumDeclaration;
-import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.body.Parameter;
-import com.github.javaparser.ast.body.VariableDeclarator;
+import com.github.javaparser.ast.body.*;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.FieldAccessExpr;
 import com.github.javaparser.ast.expr.MethodCallExpr;
@@ -23,11 +11,14 @@ import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.Type;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.resolution.UnsolvedSymbolException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javassist.bytecode.TypeAnnotationsAttribute;
+import java.util.Map;
+import java.util.Optional;
 
 public class PlaceholderNormalizer extends VoidVisitorAdapter<String> {
-	private static final Logger logger = LogManager.getLogger(PlaceholderNormalizer.class);
+	private static final Logger logger = LoggerFactory.getLogger(PlaceholderNormalizer.class);
 
 	private Mapper mapper = new Mapper();
 

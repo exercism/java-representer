@@ -5,8 +5,8 @@ import com.github.javaparser.ast.visitor.ModifierVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 import com.github.javaparser.printer.DefaultPrettyPrinterVisitor;
 import com.github.javaparser.printer.configuration.DefaultPrinterConfiguration;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import representer.normalizer.PlaceholderNormalizer;
 
 import java.util.Collections;
@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 
 public class Representer {
 
-    private static final Logger logger = LogManager.getLogger(Representer.class);
+    private static final Logger logger = LoggerFactory.getLogger(Representer.class);
 
     private List<ModifierVisitor<String>> genericNormalizers;
     private List<VoidVisitor<String>> voidNormalizers;
