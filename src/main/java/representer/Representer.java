@@ -1,15 +1,10 @@
 package representer;
 
-import com.github.javaparser.JavaParser;
-import com.github.javaparser.ParserConfiguration;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.visitor.ModifierVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 import com.github.javaparser.printer.DefaultPrettyPrinterVisitor;
 import com.github.javaparser.printer.configuration.DefaultPrinterConfiguration;
-import com.github.javaparser.symbolsolver.JavaSymbolSolver;
-import com.github.javaparser.symbolsolver.resolution.typesolvers.CombinedTypeSolver;
-import com.github.javaparser.symbolsolver.resolution.typesolvers.ReflectionTypeSolver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import representer.normalizer.PlaceholderNormalizer;
@@ -41,25 +36,12 @@ public class Representer {
         }
     }
 
-    public String generate(String sourceContent,
-            RepresentationSerializator representationSerializator,
-            MappingSerializator mappingSerializator) {
-        CompilationUnit unit = parser().parse(sourceContent).getResult().get();
+    public String generate(CompilationUnit unit) {
         voidNormalizers.forEach(n -> unit.accept(n, null));
         genericNormalizers.forEach(n -> unit.accept(n, null));
         DefaultPrettyPrinterVisitor visitor = new DefaultPrettyPrinterVisitor(new DefaultPrinterConfiguration());
         unit.accept(visitor, null);
-        String representation = visitor.toString();
-        representationSerializator.serialize(representation);
-        return representation;
-    }
-
-    private JavaParser parser() {
-        CombinedTypeSolver comb = new CombinedTypeSolver(new ReflectionTypeSolver());
-        JavaSymbolSolver solver = new JavaSymbolSolver(comb);
-        ParserConfiguration parserConfiguration =
-                new ParserConfiguration().setSymbolResolver(solver);
-        return new JavaParser(parserConfiguration);
+        return visitor.toString();
     }
 
     public Optional<PlaceholderNormalizer> placeholderNormalizer() {

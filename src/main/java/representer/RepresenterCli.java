@@ -2,18 +2,19 @@ package representer;
 
 import com.github.javaparser.ast.visitor.ModifierVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitor;
+import com.github.javaparser.utils.SourceRoot;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONObject;
 import representer.normalizer.*;
 
-import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
+import java.util.Map;
 
 public class RepresenterCli {
 
@@ -28,7 +29,7 @@ public class RepresenterCli {
 
     private static final String JAVA_PROJECT_STRUCTURE = "src/main/java";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         OptionsValidator validator = new OptionsValidator();
         if (!validator.isValid(args)) {
             throw new IllegalArgumentException(
@@ -43,44 +44,53 @@ public class RepresenterCli {
                     "exercise-context-path requires the ending trailing slash");
         }
 
-
-        Representer representer = new Representer(modifierNormalizers, voidNormalizers);
-        final String sourceFolder = contextPath + JAVA_PROJECT_STRUCTURE;
-        logger.info("Search for source file into folder {}", sourceFolder);
-        String[] sources = new File(sourceFolder).list();
-        if (sources == null) {
-            logger.error("Problems reading the folder");
-            System.exit(-1);
-        }
-        Stream<String> javaSource = Stream.of(sources).filter(s -> s.endsWith(".java")).sorted();
+        var representer = new Representer(modifierNormalizers, voidNormalizers);
+        var sourceRoot = new SourceRoot(Path.of(contextPath, JAVA_PROJECT_STRUCTURE))
+                .setParserConfiguration(ParserConfigurationFactory.getParserConfiguration());
+        var representations = new ArrayList<String>();
         
-        final RepresentationSerializatorImpl representationSerializator =
-                new RepresentationSerializatorImpl(contextPath);
-        final MappingSerializatorImpl mappingSerializator =
-                new MappingSerializatorImpl(contextPath);
-
-        javaSource.forEach(s -> {
-            try {
-                final String source = sourceFolder + "/" + s;
-                String sourceFileContent = new String(Files.readAllBytes(Paths.get(source)));
-                logger.info("Found source file {}", source);
-                representer.generate(sourceFileContent, representationSerializator,
-                        mappingSerializator);
-                logger.info("Generated representation");
-            } catch (IOException e) {
-                logger.error("Problems reading the source file", e);
+        try {
+            for (var parseResult : sourceRoot.tryToParse()) {
+                var compilationUnit = parseResult.getResult().get();
+                var representation = representer.generate(compilationUnit);
+                representations.add(representation);
             }
-        });
-        Optional<PlaceholderNormalizer> placeholderNormalizer =
-                representer.placeholderNormalizer();
-        if (placeholderNormalizer.isPresent()) {
-            mappingSerializator.serialize(placeholderNormalizer.get().mapping());
+        } catch (IOException e) {
+            logger.error("Problems reading the source files", e);
+        }
+
+        writeRepresentations(representations, contextPath);
+        writeMetadata(contextPath);
+        logger.info("Generated representation");
+
+        if (representer.placeholderNormalizer().isPresent()) {
+            var mapping = representer.placeholderNormalizer().get().mapping();
+            writeMapping(mapping, contextPath);
             logger.info("Generated mapping");
         } else {
-            logger.warn("PlacelholderNormalizer not loaded, mapping file will not be created");
+            logger.warn("PlaceholderNormalizer not loaded, mapping file will not be created");
         }
     }
 
+    private static void writeRepresentations(List<String> representations, String outputDirectory) throws IOException {
+        writeFile(String.join("\n", representations), outputDirectory + "representation.txt");
+    }
 
+    private static void writeMapping(Map<String, String> mapping, String outputDirectory) throws IOException {
+        var json = new JSONObject();
+        mapping.forEach(json::put);
+        writeFile(json.toString(2), outputDirectory + "mapping.json");
+    }
 
+    private static void writeMetadata(String outputDirectory) throws IOException {
+        var json = new JSONObject()
+                .put("version", 1);
+        writeFile(json.toString(2), outputDirectory + "representation.json");
+    }
+
+    private static void writeFile(String contents, String filePath) throws IOException {
+        try (var writer = new FileWriter(filePath)) {
+            writer.write(contents);
+        }
+    }
 }
