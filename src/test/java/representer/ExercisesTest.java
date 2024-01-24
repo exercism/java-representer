@@ -4,8 +4,8 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.visitor.ModifierVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 import org.assertj.core.api.Assertions;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import representer.normalizer.*;
 
 import java.util.Arrays;
@@ -17,7 +17,7 @@ public class ExercisesTest {
     private Representer representer;
     private final TestUtils testUtils = new TestUtils();
     
-    @Before
+    @BeforeEach
     public void init() {
     	List<ModifierVisitor<String>> genericNormalizers = Arrays.asList(new PackageNormalizer(), new ImportNormalizer(), new CommentNormalizer(), new BlockNormalizer());
     	List<VoidVisitor<String>> voidNormalizers = Arrays.asList(new PlaceholderNormalizer());

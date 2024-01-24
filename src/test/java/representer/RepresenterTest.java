@@ -1,13 +1,12 @@
 package representer;
 
 import com.github.javaparser.ast.CompilationUnit;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import representer.normalizer.*;
 
 import java.util.Arrays;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class RepresenterTest {
     private final TestUtils testUtils = new TestUtils();
@@ -18,7 +17,7 @@ public class RepresenterTest {
         Representer representer = new Representer(null, Arrays.asList(new PlaceholderNormalizer()));
         final String codeNormalized = representer.generate(sourceCode);
         final String expected = testUtils.getResourceContent("representer/result_expected");
-        assertThat(codeNormalized, is(expected));
+        assertThat(codeNormalized).isEqualTo(expected);
     }
 
     @Test
@@ -28,7 +27,7 @@ public class RepresenterTest {
                 Arrays.asList(new PlaceholderNormalizer()));
         final String codeNormalized = representer.generate(sourceCode);
         final String expected = testUtils.getResourceContent("representer/result_expected");
-        assertThat(codeNormalized, is(expected));
+        assertThat(codeNormalized).isEqualTo(expected);
     }
 
     @Test
@@ -39,7 +38,7 @@ public class RepresenterTest {
                         Arrays.asList(new PlaceholderNormalizer()));
         final String codeNormalized = representer.generate(sourceCode);
         final String expected = testUtils.getResourceContent("representer/result_expected");
-        assertThat(codeNormalized, is(expected));
+        assertThat(codeNormalized).isEqualTo(expected);
     }
 
 
@@ -53,7 +52,7 @@ public class RepresenterTest {
                         Arrays.asList(new PlaceholderNormalizer()));
         final String codeNormalized = representer.generate(sourceCode);
         final String expected = testUtils.getResourceContent("representer/result_expected");
-        assertThat(codeNormalized, is(expected));
+        assertThat(codeNormalized).isEqualTo(expected);
     }
 
     @Test
@@ -64,7 +63,7 @@ public class RepresenterTest {
                         Arrays.asList(new PlaceholderNormalizer()));
         final String codeNormalized = representer.generate(sourceCode);
         final String expected = testUtils.getResourceContent("representer/result_expected");
-        assertThat(codeNormalized, is(expected));
+        assertThat(codeNormalized).isEqualTo(expected);
     }
 
   
