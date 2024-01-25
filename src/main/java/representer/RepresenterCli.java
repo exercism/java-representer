@@ -1,33 +1,14 @@
 package representer;
 
-import com.github.javaparser.ast.visitor.ModifierVisitor;
-import com.github.javaparser.ast.visitor.VoidVisitor;
-import com.github.javaparser.utils.SourceRoot;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import representer.normalizer.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 public class RepresenterCli {
-
     private static final Logger logger = LoggerFactory.getLogger(RepresenterCli.class);
-
-    private static final List<ModifierVisitor<String>> modifierNormalizers =
-            Arrays.asList(new PackageNormalizer(), new BlockNormalizer(), 
-                    new CommentNormalizer(), new ImportNormalizer());
-
-    private static final List<VoidVisitor<String>> voidNormalizers =
-            Arrays.asList(new PlaceholderNormalizer());
-
-    private static final String JAVA_PROJECT_STRUCTURE = "src/main/java";
 
     public static void main(String[] args) throws IOException {
         OptionsValidator validator = new OptionsValidator();
@@ -44,53 +25,14 @@ public class RepresenterCli {
                     "exercise-context-path requires the ending trailing slash");
         }
 
-        var representer = new Representer(modifierNormalizers, voidNormalizers);
-        var sourceRoot = new SourceRoot(Path.of(contextPath, JAVA_PROJECT_STRUCTURE))
-                .setParserConfiguration(ParserConfigurationFactory.getParserConfiguration());
-        var representations = new ArrayList<String>();
-        
-        try {
-            for (var parseResult : sourceRoot.tryToParse()) {
-                var compilationUnit = parseResult.getResult().get();
-                var representation = representer.generate(compilationUnit);
-                representations.add(representation);
-            }
-        } catch (IOException e) {
-            logger.error("Problems reading the source files", e);
-        }
+        var solution = new SubmittedSolution(slug, Path.of(contextPath));
+        var representation = Representer.generate(solution);
 
-        writeRepresentations(representations, contextPath);
-        writeMetadata(contextPath);
-        logger.info("Generated representation");
-
-        if (representer.placeholderNormalizer().isPresent()) {
-            var mapping = representer.placeholderNormalizer().get().mapping();
-            writeMapping(mapping, contextPath);
-            logger.info("Generated mapping");
-        } else {
-            logger.warn("PlaceholderNormalizer not loaded, mapping file will not be created");
-        }
-    }
-
-    private static void writeRepresentations(List<String> representations, String outputDirectory) throws IOException {
-        writeFile(String.join("\n", representations), outputDirectory + "representation.txt");
-    }
-
-    private static void writeMapping(Map<String, String> mapping, String outputDirectory) throws IOException {
-        var json = new JSONObject();
-        mapping.forEach(json::put);
-        writeFile(json.toString(2), outputDirectory + "mapping.json");
-    }
-
-    private static void writeMetadata(String outputDirectory) throws IOException {
-        var json = new JSONObject()
-                .put("version", 1);
-        writeFile(json.toString(2), outputDirectory + "representation.json");
-    }
-
-    private static void writeFile(String contents, String filePath) throws IOException {
-        try (var writer = new FileWriter(filePath)) {
-            writer.write(contents);
+        try (var representationWriter = new FileWriter(contextPath + "representation.txt");
+        var mappingWriter = new FileWriter(contextPath + "mapping.json");
+        var metadataWriter = new FileWriter(contextPath + "representation.json")) {
+            var outputWriter = new OutputWriter(representationWriter, mappingWriter, metadataWriter);
+            outputWriter.write(representation);
         }
     }
 }

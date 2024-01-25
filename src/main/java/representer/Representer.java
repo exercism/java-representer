@@ -1,58 +1,28 @@
 package representer;
 
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.visitor.ModifierVisitor;
-import com.github.javaparser.ast.visitor.VoidVisitor;
 import com.github.javaparser.printer.DefaultPrettyPrinterVisitor;
 import com.github.javaparser.printer.configuration.DefaultPrinterConfiguration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import representer.normalizer.PlaceholderNormalizer;
+import representer.normalizer.*;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+class Representer {
 
-public class Representer {
+    public static Representation generate(Solution solution) {
+        var placeholders = new PlaceholderMapping();
+        var normalization = new StringBuilder();
 
-    private static final Logger logger = LoggerFactory.getLogger(Representer.class);
+        for (CompilationUnit unit : solution.getCompilationUnits()) {
+            unit.accept(new PlaceholderNormalizer(), placeholders);
+            unit.accept(new PackageNormalizer(), null);
+            unit.accept(new BlockNormalizer(), null);
+            unit.accept(new CommentNormalizer(), null);
+            unit.accept(new ImportNormalizer(), null);
 
-    private List<ModifierVisitor<String>> genericNormalizers;
-    private List<VoidVisitor<String>> voidNormalizers;
-
-    public Representer(List<ModifierVisitor<String>> genericNormalizers,
-            List<VoidVisitor<String>> voidNormalizer) {
-        this.voidNormalizers = voidNormalizer != null ? voidNormalizer : Collections.emptyList();
-        this.genericNormalizers =
-                genericNormalizers != null ? genericNormalizers : Collections.emptyList();
-        if (logger.isInfoEnabled()) {
-            List<String> loadedNormalizersNames = Stream
-                    .concat(this.voidNormalizers.stream().map(n -> n.getClass().getSimpleName()),
-                            this.genericNormalizers.stream().map(n -> n.getClass().getSimpleName()))
-                    .collect(Collectors.toList());
-            logger.info("Normalizers loaded: {}", loadedNormalizersNames);
+            var printer = new DefaultPrettyPrinterVisitor(new DefaultPrinterConfiguration());
+            unit.accept(printer, null);
+            normalization.append(printer);
         }
-    }
 
-    public String generate(CompilationUnit unit) {
-        voidNormalizers.forEach(n -> unit.accept(n, null));
-        genericNormalizers.forEach(n -> unit.accept(n, null));
-        DefaultPrettyPrinterVisitor visitor = new DefaultPrettyPrinterVisitor(new DefaultPrinterConfiguration());
-        unit.accept(visitor, null);
-        return visitor.toString();
+        return new Representation(normalization.toString(), placeholders.getPlaceholders());
     }
-
-    public Optional<PlaceholderNormalizer> placeholderNormalizer() {
-        return placeholderNormalizer(voidNormalizers);
-    }
-
-    private Optional<PlaceholderNormalizer> placeholderNormalizer(
-            List<VoidVisitor<String>> normalizers) {
-        return normalizers.stream().filter(n -> n.getClass() == PlaceholderNormalizer.class)
-                .map(n -> (PlaceholderNormalizer) n)
-                .findFirst();
-    }
-
 }
