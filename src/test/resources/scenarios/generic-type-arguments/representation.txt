@@ -1,0 +1,9 @@
+class PLACEHOLDER_02 {
+    static <PLACEHOLDER_01> java.util.List<PLACEHOLDER_01> PLACEHOLDER_03(java.util.List<PLACEHOLDER_01> PLACEHOLDER_04, java.util.function.Function<PLACEHOLDER_01, PLACEHOLDER_01> PLACEHOLDER_05) {
+        java.util.List<PLACEHOLDER_01> PLACEHOLDER_06 = new java.util.ArrayList<>();
+        for (PLACEHOLDER_01 PLACEHOLDER_07 : PLACEHOLDER_04) {
+            PLACEHOLDER_06.add(PLACEHOLDER_05.apply(PLACEHOLDER_07));
+        }
+        return PLACEHOLDER_06;
+    }
+}
