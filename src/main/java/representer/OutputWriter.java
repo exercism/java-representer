@@ -7,7 +7,7 @@ import java.io.Writer;
 import java.util.Map;
 
 class OutputWriter {
-    private static final int REPRESENTER_VERSION = 1;
+    private static final int REPRESENTER_VERSION = 2;
     private static final int JSON_INDENTATION = 2;
 
     private final Writer representationWriter;
