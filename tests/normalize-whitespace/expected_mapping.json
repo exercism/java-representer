@@ -1,7 +1,6 @@
 {
-  "Anagram": "PLACEHOLDER_1",
-  "String": "PLACEHOLDER_3",
-  "candidates": "PLACEHOLDER_5",
-  "match": "PLACEHOLDER_4",
-  "word": "PLACEHOLDER_2"
+  "PLACEHOLDER_01": "Anagram",
+  "PLACEHOLDER_02": "match",
+  "PLACEHOLDER_03": "word",
+  "PLACEHOLDER_04": "candidates"
 }

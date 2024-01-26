@@ -1,25 +1,26 @@
-enum PLACEHOLDER_1 {
+final class PLACEHOLDER_01 {
+    private static final int PLACEHOLDER_05 = 4;
 
-    PLACEHOLDER_2, PLACEHOLDER_3, PLACEHOLDER_4, PLACEHOLDER_5
-}
-final class PLACEHOLDER_6 {
-
-    private static final int PLACEHOLDER_7 = 4;
-
-    List<PLACEHOLDER_1> PLACEHOLDER_8(final int PLACEHOLDER_11) {
-        final List<Signal> PLACEHOLDER_9 = new ArrayList<>();
-        for (final Signal PLACEHOLDER_12 : PLACEHOLDER_1.values()) {
-            if (PLACEHOLDER_10(PLACEHOLDER_12.ordinal(), PLACEHOLDER_11)) {
-                PLACEHOLDER_9.add(PLACEHOLDER_12);
+    java.util.List<PLACEHOLDER_02> PLACEHOLDER_03(final int PLACEHOLDER_10) {
+        final java.util.List<PLACEHOLDER_02> PLACEHOLDER_11 = new java.util.ArrayList<>();
+        for (final PLACEHOLDER_02 PLACEHOLDER_12 : PLACEHOLDER_02.values()) {
+            if (PLACEHOLDER_04(PLACEHOLDER_12.ordinal(), PLACEHOLDER_10)) {
+                PLACEHOLDER_11.add(PLACEHOLDER_12);
             }
         }
-        if (PLACEHOLDER_10(PLACEHOLDER_7, PLACEHOLDER_11)) {
-            Collections.reverse(PLACEHOLDER_9);
+        if (PLACEHOLDER_04(PLACEHOLDER_01.PLACEHOLDER_05, PLACEHOLDER_10)) {
+            java.util.Collections.reverse(PLACEHOLDER_11);
         }
-        return PLACEHOLDER_9;
+        return PLACEHOLDER_11;
     }
 
-    private boolean PLACEHOLDER_10(final int PLACEHOLDER_13, final int PLACEHOLDER_11) {
-        return ((PLACEHOLDER_11 >> PLACEHOLDER_13) & 1) == 1;
+    private boolean PLACEHOLDER_04(final int PLACEHOLDER_13, final int PLACEHOLDER_14) {
+        return ((PLACEHOLDER_14 >> PLACEHOLDER_13) & 1) == 1;
     }
 }
+enum PLACEHOLDER_02 {
+
+    PLACEHOLDER_06,
+    PLACEHOLDER_07,
+    PLACEHOLDER_08,
+    PLACEHOLDER_09;}

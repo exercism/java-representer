@@ -1,28 +1,34 @@
 package representer;
 
-import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.printer.DefaultPrettyPrinterVisitor;
-import com.github.javaparser.printer.configuration.DefaultPrinterConfiguration;
-import representer.normalizer.*;
+import representer.processors.*;
+import spoon.Launcher;
+import spoon.reflect.CtModel;
+import spoon.reflect.declaration.CtType;
 
 class Representer {
 
-    public static Representation generate(Solution solution) {
-        var placeholders = new PlaceholderMapping();
-        var normalization = new StringBuilder();
+    public static Representation generate(String path) {
+        var placeholders = new Placeholders();
 
-        for (CompilationUnit unit : solution.getCompilationUnits()) {
-            unit.accept(new PlaceholderNormalizer(), placeholders);
-            unit.accept(new PackageNormalizer(), null);
-            unit.accept(new BlockNormalizer(), null);
-            unit.accept(new CommentNormalizer(), null);
-            unit.accept(new ImportNormalizer(), null);
+        var launcher = new Launcher();
+        launcher.addInputResource(path);
+        launcher.addProcessor(new RenameTypes(placeholders));
+        launcher.addProcessor(new RenameMethods(placeholders));
+        launcher.addProcessor(new RenameFields(placeholders));
+        launcher.addProcessor(new RenameVariables(placeholders));
+        launcher.addProcessor(new RemoveComments());
+        launcher.buildModel();
+        launcher.process();
 
-            var printer = new DefaultPrettyPrinterVisitor(new DefaultPrinterConfiguration());
-            unit.accept(printer, null);
-            normalization.append(printer);
+        return new Representation(getRepresentationString(launcher.getModel()), placeholders.getPlaceholders());
+    }
+
+    private static String getRepresentationString(CtModel model) {
+        var normalized = new StringBuilder();
+        for (CtType<?> type : model.getAllTypes()) {
+            normalized.append(type.toString());
+            normalized.append("\n");
         }
-
-        return new Representation(normalization.toString(), placeholders.getPlaceholders());
+        return normalized.toString();
     }
 }
