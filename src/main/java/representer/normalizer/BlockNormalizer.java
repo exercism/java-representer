@@ -6,29 +6,24 @@ import com.github.javaparser.ast.stmt.IfStmt;
 import com.github.javaparser.ast.stmt.Statement;
 import com.github.javaparser.ast.visitor.ModifierVisitor;
 
-public class BlockNormalizer extends ModifierVisitor<String> {
-
+public class BlockNormalizer extends ModifierVisitor<Void> {
 
     @Override
-    public Node visit(IfStmt n, String arg) {
-        if (!n.hasThenBlock()) {
-                        n.setThenStmt(wrapWithBlock(n.getThenStmt()));
+    public Node visit(IfStmt node, Void arg) {
+        if (!node.hasThenBlock()) {
+            node.setThenStmt(wrapWithBlock(node.getThenStmt()));
         }
-        
-        n.getElseStmt().ifPresent(stmt -> {
-            if(!stmt.isBlockStmt()) {
-                n.setElseStmt(wrapWithBlock(stmt));
+
+        node.getElseStmt().ifPresent(stmt -> {
+            if (!stmt.isBlockStmt()) {
+                node.setElseStmt(wrapWithBlock(stmt));
             }
         });
 
-        return n;
+        return node;
     }
 
     private Statement wrapWithBlock(Statement stmt) {
-        BlockStmt wrapStmt = new BlockStmt();
-        wrapStmt.addAndGetStatement(stmt);
-        return wrapStmt;
-
+        return new BlockStmt().addAndGetStatement(stmt);
     }
-
 }

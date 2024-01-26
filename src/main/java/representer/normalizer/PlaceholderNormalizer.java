@@ -21,22 +21,22 @@ public class PlaceholderNormalizer extends VoidVisitorAdapter<PlaceholderGenerat
     private static final Logger logger = LoggerFactory.getLogger(PlaceholderNormalizer.class);
 
     @Override
-    public void visit(ClassOrInterfaceDeclaration n, PlaceholderGenerator generator) {
-        logger.debug("ClassOrInterfaceDeclaration: {}", n.getName().asString());
-        final String name = n.getNameAsString();
-        n.setName(generator.getPlaceholder(name));
-        super.visit(n, generator);
+    public void visit(ClassOrInterfaceDeclaration node, PlaceholderGenerator generator) {
+        logger.debug("ClassOrInterfaceDeclaration: {}", node.getName().asString());
+        final String name = node.getNameAsString();
+        node.setName(generator.getPlaceholder(name));
+        super.visit(node, generator);
     }
 
     @Override
-    public void visit(MethodDeclaration n, PlaceholderGenerator generator) {
-        logger.debug("MethodDeclaration: {}", n.getName().asString());
-        logger.debug("method return type: {}", n.getTypeAsString());
-        mapType(n.getType(), generator);
-        n.getParameters().forEach(p -> logger.debug("method parameter: {}", p.getType().asString()));
-        final String name = n.getNameAsString();
-        n.setName(generator.getPlaceholder(name));
-        super.visit(n, generator);
+    public void visit(MethodDeclaration node, PlaceholderGenerator generator) {
+        logger.debug("MethodDeclaration: {}", node.getName().asString());
+        logger.debug("method return type: {}", node.getTypeAsString());
+        mapType(node.getType(), generator);
+        node.getParameters().forEach(p -> logger.debug("method parameter: {}", p.getType().asString()));
+        final String name = node.getNameAsString();
+        node.setName(generator.getPlaceholder(name));
+        super.visit(node, generator);
     }
 
     private void mapType(Type t, PlaceholderGenerator generator) {
@@ -68,46 +68,46 @@ public class PlaceholderNormalizer extends VoidVisitorAdapter<PlaceholderGenerat
     }
 
     @Override
-    public void visit(Parameter n, PlaceholderGenerator generator) {
-        logger.debug("Parameter: {}", n.getName().asString());
-        final String name = n.getNameAsString();
-        n.setName(generator.getPlaceholder(name));
-        super.visit(n, generator);
+    public void visit(Parameter node, PlaceholderGenerator generator) {
+        logger.debug("Parameter: {}", node.getName().asString());
+        final String name = node.getNameAsString();
+        node.setName(generator.getPlaceholder(name));
+        super.visit(node, generator);
     }
 
     @Override
-    public void visit(NameExpr n, PlaceholderGenerator generator) {
-        logger.debug("Name Expr: {}", n);
-        logger.debug("Name Expr: {}", n.getClass());
-        if (isUserDefined(qualifiedName(n))) {
-            final String name = n.getNameAsString();
-            n.setName(generator.getPlaceholder(name));
+    public void visit(NameExpr node, PlaceholderGenerator generator) {
+        logger.debug("Name Expr: {}", node);
+        logger.debug("Name Expr: {}", node.getClass());
+        if (isUserDefined(qualifiedName(node))) {
+            final String name = node.getNameAsString();
+            node.setName(generator.getPlaceholder(name));
         }
-        super.visit(n, generator);
+        super.visit(node, generator);
     }
 
     @Override
-    public void visit(FieldAccessExpr n, PlaceholderGenerator generator) {
-        logger.debug("FieldAccessExpr: {}", n);
-        Expression scope = n.getScope();
+    public void visit(FieldAccessExpr node, PlaceholderGenerator generator) {
+        logger.debug("FieldAccessExpr: {}", node);
+        Expression scope = node.getScope();
         if (scope.isNameExpr()) {
             if (isUserDefined(qualifiedName(scope.asNameExpr()))) {
                 logger.debug("user defined");
-                final String name = n.getNameAsString();
-                n.setName(generator.getPlaceholder(name));
+                final String name = node.getNameAsString();
+                node.setName(generator.getPlaceholder(name));
             } else {
                 logger.debug("Java language");
             }
         }
-        final String name = n.getNameAsString();
-        n.setName(generator.getPlaceholder(name));
-        super.visit(n, generator);
+        final String name = node.getNameAsString();
+        node.setName(generator.getPlaceholder(name));
+        super.visit(node, generator);
     }
 
     @Override
-    public void visit(ReturnStmt n, PlaceholderGenerator generator) {
-        logger.debug("ReturnStmt: {}", n);
-        Optional<Expression> scope = n.getExpression();
+    public void visit(ReturnStmt node, PlaceholderGenerator generator) {
+        logger.debug("ReturnStmt: {}", node);
+        Optional<Expression> scope = node.getExpression();
         scope.ifPresent(s -> {
             if (s.isNameExpr()) {
                 if (isUserDefined(qualifiedName(s.asNameExpr()))) {
@@ -119,13 +119,13 @@ public class PlaceholderNormalizer extends VoidVisitorAdapter<PlaceholderGenerat
                 }
             }
         });
-        super.visit(n, generator);
+        super.visit(node, generator);
     }
 
     @Override
-    public void visit(MethodCallExpr n, PlaceholderGenerator generator) {
-        logger.debug("MethodCallExpr: {}", n);
-        Optional<Expression> scope = n.getScope();
+    public void visit(MethodCallExpr node, PlaceholderGenerator generator) {
+        logger.debug("MethodCallExpr: {}", node);
+        Optional<Expression> scope = node.getScope();
         scope.ifPresent(s -> {
             if (s.isNameExpr()) {
                 if (isUserDefined(qualifiedName(s.asNameExpr()))) {
@@ -138,48 +138,49 @@ public class PlaceholderNormalizer extends VoidVisitorAdapter<PlaceholderGenerat
             }
         });
 
-        if (!scope.isPresent()) {
-            final String name = n.getNameAsString();
-            n.setName(generator.getPlaceholder(name));
-            n.getArguments().forEach(a -> {
+        if (scope.isEmpty()) {
+            final String name = node.getNameAsString();
+            node.setName(generator.getPlaceholder(name));
+            node.getArguments().forEach(a -> {
                 if (a.isNameExpr()) {
                     String nn = a.asNameExpr().getName().asString();
                     a.asNameExpr().setName(generator.getPlaceholder(nn));
                 }
             });
         }
-        super.visit(n, generator);
+
+        super.visit(node, generator);
     }
 
-    public void visit(VariableDeclarator n, PlaceholderGenerator generator) {
-        logger.debug("VariableDeclarator: {}", n.getName().asString());
-        final String name = n.getNameAsString();
-        n.setName(generator.getPlaceholder(name));
-        super.visit(n, generator);
-    }
-
-    @Override
-    public void visit(ConstructorDeclaration n, PlaceholderGenerator generator) {
-        logger.debug("ConstructorDeclaration: {}", n.getName().asString());
-        final String name = n.getNameAsString();
-        n.setName(generator.getPlaceholder(name));
-        super.visit(n, generator);
+    public void visit(VariableDeclarator node, PlaceholderGenerator generator) {
+        logger.debug("VariableDeclarator: {}", node.getName().asString());
+        final String name = node.getNameAsString();
+        node.setName(generator.getPlaceholder(name));
+        super.visit(node, generator);
     }
 
     @Override
-    public void visit(EnumDeclaration n, PlaceholderGenerator generator) {
-        logger.debug("EnumDeclaration: {}", n.getName().asString());
-        final String name = n.getNameAsString();
-        n.setName(generator.getPlaceholder(name));
-        super.visit(n, generator);
+    public void visit(ConstructorDeclaration node, PlaceholderGenerator generator) {
+        logger.debug("ConstructorDeclaration: {}", node.getName().asString());
+        final String name = node.getNameAsString();
+        node.setName(generator.getPlaceholder(name));
+        super.visit(node, generator);
     }
 
     @Override
-    public void visit(EnumConstantDeclaration n, PlaceholderGenerator generator) {
-        logger.debug("EnumConstantDeclaration: {}", n.getName().asString());
-        final String name = n.getNameAsString();
-        n.setName(generator.getPlaceholder(name));
-        super.visit(n, generator);
+    public void visit(EnumDeclaration node, PlaceholderGenerator generator) {
+        logger.debug("EnumDeclaration: {}", node.getName().asString());
+        final String name = node.getNameAsString();
+        node.setName(generator.getPlaceholder(name));
+        super.visit(node, generator);
+    }
+
+    @Override
+    public void visit(EnumConstantDeclaration node, PlaceholderGenerator generator) {
+        logger.debug("EnumConstantDeclaration: {}", node.getName().asString());
+        final String name = node.getNameAsString();
+        node.setName(generator.getPlaceholder(name));
+        super.visit(node, generator);
     }
 
     private boolean isUserDefined(String qualifiedName) {

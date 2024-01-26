@@ -7,13 +7,13 @@ import com.github.javaparser.ast.comments.JavadocComment;
 
 import com.github.javaparser.ast.visitor.ModifierVisitor;
 
-public class CommentNormalizer extends ModifierVisitor<String> {
+public class CommentNormalizer extends ModifierVisitor<Void> {
 
     /**
      * Remove nodes of type LineComment
      */
     @Override
-    public Node visit(LineComment n, String arg) {
+    public Node visit(LineComment node, Void arg) {
         return null;
     }
 
@@ -21,7 +21,7 @@ public class CommentNormalizer extends ModifierVisitor<String> {
      * Remove nodes of type BlockComment
      */
     @Override
-    public Node visit(BlockComment n, String arg) {
+    public Node visit(BlockComment node, Void arg) {
         return null;
     }
 
@@ -29,7 +29,7 @@ public class CommentNormalizer extends ModifierVisitor<String> {
      * Remove nodes of type JavadocComment
      */
     @Override
-    public Node visit(JavadocComment n, String arg) {
+    public Node visit(JavadocComment node, Void arg) {
         return null;
     }
 }
