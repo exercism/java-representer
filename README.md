@@ -1,4 +1,4 @@
-# Java Representer
+# Java Representer [![Coverage Status][coveralls-badge]][coveralls-report]
 
 This repository contains the source code for the [Representer][representer-docs] used by the Java track on Exercism.
 It takes a Java exercise solution submitted by a student and transforms it into a normalized representation.
@@ -71,3 +71,5 @@ bin/run-tests-in-docker.sh
 
 [contributing-guide]: https://github.com/exercism/java-representer/blob/main/CONTRIBUTING.md
 [representer-docs]: https://exercism.org/docs/building/tooling/representers
+[coveralls-badge]: https://coveralls.io/repos/github/exercism/java-representer/badge.svg?branch=main
+[coveralls-report]: https://coveralls.io/github/exercism/java-representer?branch=main
