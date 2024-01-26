@@ -2,8 +2,7 @@ FROM gradle:8.5-jdk21 AS build
 
 WORKDIR /app
 COPY . /app
-
-RUN gradle -i --stacktrace clean build shadowJar
+RUN gradle -i --stacktrace clean build
 
 FROM eclipse-temurin:21
 
