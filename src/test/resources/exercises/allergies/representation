@@ -11,19 +11,19 @@ class PLACEHOLDER_1 {
     }
 
     boolean PLACEHOLDER_5(Allergen PLACEHOLDER_6) {
-        return (PLACEHOLDER_2 & PLACEHOLDER_7.getScore()) != 0;
+        return (PLACEHOLDER_2 & PLACEHOLDER_6.getScore()) != 0;
     }
 }
 enum PLACEHOLDER_3 {
 
-    PLACEHOLDER_8(1),
-    PLACEHOLDER_9(2),
-    PLACEHOLDER_10(4),
-    PLACEHOLDER_11(8),
-    PLACEHOLDER_12(16),
-    PLACEHOLDER_13(32),
-    PLACEHOLDER_14(64),
-    PLACEHOLDER_15(128);
+    PLACEHOLDER_7(1),
+    PLACEHOLDER_8(2),
+    PLACEHOLDER_9(4),
+    PLACEHOLDER_10(8),
+    PLACEHOLDER_11(16),
+    PLACEHOLDER_12(32),
+    PLACEHOLDER_13(64),
+    PLACEHOLDER_14(128);
 
     private final int PLACEHOLDER_2;
 
@@ -31,7 +31,7 @@ enum PLACEHOLDER_3 {
         this.PLACEHOLDER_2 = PLACEHOLDER_2;
     }
 
-    int PLACEHOLDER_16() {
-        return PLACEHOLDER_17;
+    int PLACEHOLDER_15() {
+        return PLACEHOLDER_2;
     }
 }

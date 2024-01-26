@@ -7,30 +7,30 @@ final class PLACEHOLDER_1 {
     private final int PLACEHOLDER_4;
 
     PLACEHOLDER_1(final int PLACEHOLDER_6, final int[] PLACEHOLDER_7) {
-        PLACEHOLDER_5(PLACEHOLDER_8, PLACEHOLDER_9);
-        this.PLACEHOLDER_4 = PLACEHOLDER_10(PLACEHOLDER_8, PLACEHOLDER_9);
+        PLACEHOLDER_5(PLACEHOLDER_6, PLACEHOLDER_7);
+        this.PLACEHOLDER_4 = PLACEHOLDER_8(PLACEHOLDER_6, PLACEHOLDER_7);
     }
 
-    int[] PLACEHOLDER_11(final int PLACEHOLDER_12) {
-        if (PLACEHOLDER_12 < PLACEHOLDER_2) {
+    int[] PLACEHOLDER_9(final int PLACEHOLDER_10) {
+        if (PLACEHOLDER_10 < PLACEHOLDER_2) {
             throw new IllegalArgumentException(PLACEHOLDER_3);
         }
-        final int PLACEHOLDER_13 = PLACEHOLDER_14(PLACEHOLDER_15);
-        final int[] PLACEHOLDER_16 = new int[PLACEHOLDER_13 + 1];
-        int PLACEHOLDER_17 = PLACEHOLDER_4;
-        for (int PLACEHOLDER_19 = PLACEHOLDER_13; PLACEHOLDER_19 >= 0; PLACEHOLDER_19--) {
-            final int PLACEHOLDER_18 = (int) Math.floor(PLACEHOLDER_17 / Math.pow(PLACEHOLDER_12, PLACEHOLDER_19));
-            PLACEHOLDER_16[PLACEHOLDER_13 - PLACEHOLDER_19] = PLACEHOLDER_18;
-            PLACEHOLDER_17 -= PLACEHOLDER_18 * Math.pow(PLACEHOLDER_12, PLACEHOLDER_19);
+        final int PLACEHOLDER_11 = PLACEHOLDER_12(PLACEHOLDER_10);
+        final int[] PLACEHOLDER_13 = new int[PLACEHOLDER_11 + 1];
+        int PLACEHOLDER_14 = PLACEHOLDER_4;
+        for (int PLACEHOLDER_16 = PLACEHOLDER_11; PLACEHOLDER_16 >= 0; PLACEHOLDER_16--) {
+            final int PLACEHOLDER_15 = (int) Math.floor(PLACEHOLDER_14 / Math.pow(PLACEHOLDER_10, PLACEHOLDER_16));
+            PLACEHOLDER_13[PLACEHOLDER_11 - PLACEHOLDER_16] = PLACEHOLDER_15;
+            PLACEHOLDER_14 -= PLACEHOLDER_15 * Math.pow(PLACEHOLDER_10, PLACEHOLDER_16);
         }
-        return PLACEHOLDER_20;
+        return PLACEHOLDER_13;
     }
 
     private void PLACEHOLDER_5(final int PLACEHOLDER_6, final int[] PLACEHOLDER_7) {
         if (PLACEHOLDER_6 < PLACEHOLDER_2) {
             throw new IllegalArgumentException(PLACEHOLDER_3);
         }
-        if (PLACEHOLDER_7.PLACEHOLDER_22 == 0) {
+        if (PLACEHOLDER_7.PLACEHOLDER_17 == 0) {
             return;
         }
         if (Arrays.stream(PLACEHOLDER_7).min().getAsInt() < 0) {
@@ -41,20 +41,20 @@ final class PLACEHOLDER_1 {
         }
     }
 
-    private int PLACEHOLDER_10(final int PLACEHOLDER_6, final int[] PLACEHOLDER_7) {
-        int PLACEHOLDER_16 = 0;
-        final int PLACEHOLDER_13 = PLACEHOLDER_7.PLACEHOLDER_22 - 1;
-        for (int PLACEHOLDER_19 = PLACEHOLDER_13; PLACEHOLDER_19 >= 0; PLACEHOLDER_19--) {
-            PLACEHOLDER_16 += PLACEHOLDER_7[PLACEHOLDER_13 - PLACEHOLDER_19] * Math.pow(PLACEHOLDER_6, PLACEHOLDER_19);
+    private int PLACEHOLDER_8(final int PLACEHOLDER_6, final int[] PLACEHOLDER_7) {
+        int PLACEHOLDER_13 = 0;
+        final int PLACEHOLDER_11 = PLACEHOLDER_7.PLACEHOLDER_17 - 1;
+        for (int PLACEHOLDER_16 = PLACEHOLDER_11; PLACEHOLDER_16 >= 0; PLACEHOLDER_16--) {
+            PLACEHOLDER_13 += PLACEHOLDER_7[PLACEHOLDER_11 - PLACEHOLDER_16] * Math.pow(PLACEHOLDER_6, PLACEHOLDER_16);
         }
-        return PLACEHOLDER_20;
+        return PLACEHOLDER_13;
     }
 
-    private int PLACEHOLDER_14(final int PLACEHOLDER_12) {
-        int PLACEHOLDER_16 = 0;
-        while (Math.pow(PLACEHOLDER_12, PLACEHOLDER_16 + 1) < PLACEHOLDER_4) {
-            PLACEHOLDER_16 += 1;
+    private int PLACEHOLDER_12(final int PLACEHOLDER_10) {
+        int PLACEHOLDER_13 = 0;
+        while (Math.pow(PLACEHOLDER_10, PLACEHOLDER_13 + 1) < PLACEHOLDER_4) {
+            PLACEHOLDER_13 += 1;
         }
-        return PLACEHOLDER_20;
+        return PLACEHOLDER_13;
     }
 }
