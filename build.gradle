@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    implementation "org.json:json:20231013"
+    implementation "com.google.code.gson:gson:2.10.1"
     implementation "com.github.javaparser:javaparser-symbol-solver-core:3.25.7"
     implementation "org.slf4j:slf4j-api:2.0.10"
     implementation "ch.qos.logback:logback-core:1.4.12"

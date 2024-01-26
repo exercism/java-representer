@@ -1,15 +1,15 @@
 {
-  "REVERSE_SIGNALS_BIT_POSITION": "PLACEHOLDER_7",
-  "WINK": "PLACEHOLDER_2",
-  "JUMP": "PLACEHOLDER_5",
-  "result": "PLACEHOLDER_9",
-  "number": "PLACEHOLDER_11",
-  "Signal": "PLACEHOLDER_1",
-  "calculateHandshake": "PLACEHOLDER_8",
-  "HandshakeCalculator": "PLACEHOLDER_6",
   "CLOSE_YOUR_EYES": "PLACEHOLDER_4",
+  "DOUBLE_BLINK": "PLACEHOLDER_3",
+  "HandshakeCalculator": "PLACEHOLDER_6",
+  "JUMP": "PLACEHOLDER_5",
+  "REVERSE_SIGNALS_BIT_POSITION": "PLACEHOLDER_7",
+  "Signal": "PLACEHOLDER_1",
+  "WINK": "PLACEHOLDER_2",
+  "calculateHandshake": "PLACEHOLDER_8",
   "isBitSet": "PLACEHOLDER_10",
+  "number": "PLACEHOLDER_11",
   "position": "PLACEHOLDER_13",
-  "signal": "PLACEHOLDER_12",
-  "DOUBLE_BLINK": "PLACEHOLDER_3"
+  "result": "PLACEHOLDER_9",
+  "signal": "PLACEHOLDER_12"
 }

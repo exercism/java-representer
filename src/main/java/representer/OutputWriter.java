@@ -1,14 +1,17 @@
 package representer;
 
-import org.json.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Map;
+import java.util.TreeMap;
 
 class OutputWriter {
     private static final int REPRESENTER_VERSION = 2;
-    private static final int JSON_INDENTATION = 2;
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     private final Writer representationWriter;
     private final Writer mappingWriter;
@@ -31,14 +34,13 @@ class OutputWriter {
     }
 
     private void writeMapping(Map<String, String> mapping) throws IOException {
-        var json = new JSONObject();
-        mapping.forEach(json::put);
-        this.mappingWriter.write(json.toString(JSON_INDENTATION));
+        var sorted = new TreeMap<>(mapping);
+        this.mappingWriter.write(GSON.toJson(sorted));
     }
 
     private void writeMetadata() throws IOException {
-        var json = new JSONObject()
-                .put("version", REPRESENTER_VERSION);
-        this.metadataWriter.write(json.toString(JSON_INDENTATION));
+        var json = new JsonObject();
+        json.addProperty("version", REPRESENTER_VERSION);
+        this.metadataWriter.write(GSON.toJson(json));
     }
 }
