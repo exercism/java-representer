@@ -1,9 +1,0 @@
-class PLACEHOLDER_01 {
-    public PLACEHOLDER_01(java.lang.String PLACEHOLDER_03) {
-        throw new java.lang.UnsupportedOperationException("Please implement the Anagram(String word) constructor");
-    }
-
-    public java.util.List<java.lang.String> PLACEHOLDER_02(java.util.List<java.lang.String> PLACEHOLDER_04) {
-        throw new java.lang.UnsupportedOperationException("Please implement the match() method");
-    }
-}
