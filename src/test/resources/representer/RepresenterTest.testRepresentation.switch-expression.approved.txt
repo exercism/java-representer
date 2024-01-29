@@ -1,0 +1,12 @@
+class PLACEHOLDER_01 {
+    int PLACEHOLDER_02(java.lang.String PLACEHOLDER_03) {
+        return switch (PLACEHOLDER_03) {
+            case "Lord of the Rings" ->
+                5;
+            case "Harry Potter" ->
+                4;
+            default ->
+                -1;
+        };
+    }
+}

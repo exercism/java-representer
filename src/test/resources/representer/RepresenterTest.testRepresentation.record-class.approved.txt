@@ -1,0 +1,4 @@
+record PLACEHOLDER_01(java.lang.String field) {
+    void PLACEHOLDER_03(int PLACEHOLDER_06) {
+    }
+}

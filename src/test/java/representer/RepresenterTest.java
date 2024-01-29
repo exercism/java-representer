@@ -21,7 +21,9 @@ class RepresenterTest {
                 "class-with-nested-enum",
                 "lambda-arguments",
                 "generic-type-arguments",
-                "if-statements-without-block-bodies"
+                "if-statements-without-block-bodies",
+                "record-class",
+                "switch-expression"
         );
     }
 
