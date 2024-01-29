@@ -11,6 +11,11 @@ import spoon.reflect.code.CtLocalVariable;
 import spoon.reflect.declaration.CtParameter;
 import spoon.reflect.declaration.CtVariable;
 
+/**
+ * This {@link spoon.processing.Processor} renames all variables to use placeholder names,
+ * so that they become name-agnostic.
+ * Renamed variables include local variables, scoped variables like in a catch-clause, and method parameters.
+ */
 public final class RenameVariables extends AbstractProcessor<CtVariable<?>> {
     private static final Logger LOGGER = LoggerFactory.getLogger(RenameVariables.class);
     private final PlaceholderGenerator placeholderGenerator;
