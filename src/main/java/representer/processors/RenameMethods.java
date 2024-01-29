@@ -21,7 +21,8 @@ public final class RenameMethods extends AbstractProcessor<CtMethod<?>> {
 
     @Override
     public void process(CtMethod<?> ctMethod) {
-        LOGGER.debug("Renaming method {}", ctMethod.getSimpleName());
-        Refactoring.changeMethodName(ctMethod, this.placeholderGenerator.getPlaceholder(ctMethod.getSimpleName()));
+        var placeholder = this.placeholderGenerator.getPlaceholder(ctMethod.getSimpleName());
+        LOGGER.info("Renaming method '{}' to '{}'", ctMethod.getSimpleName(), placeholder);
+        Refactoring.changeMethodName(ctMethod, placeholder);
     }
 }

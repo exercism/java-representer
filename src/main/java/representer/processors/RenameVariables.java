@@ -33,14 +33,16 @@ public final class RenameVariables extends AbstractProcessor<CtVariable<?>> {
 
     @Override
     public void process(CtVariable<?> ctVariable) {
-        LOGGER.debug("Renaming variable {}", ctVariable.getSimpleName());
-        var refactor = new CtRenameGenericVariableRefactoring();
-        refactor.setTarget(ctVariable);
-        refactor.setNewName(this.placeholderGenerator.getPlaceholder(ctVariable.getSimpleName()));
+        var placeholder = this.placeholderGenerator.getPlaceholder(ctVariable.getSimpleName());
+        LOGGER.debug("Renaming variable '{}' to '{}'", ctVariable.getSimpleName(), placeholder);
+        var refactor = new CtRenameGenericVariableRefactoring()
+                .setTarget(ctVariable)
+                .setNewName(placeholder);
+
         try {
             refactor.refactor();
         } catch (RefactoringException ex) {
-            LOGGER.warn("Failed to rename variable {}", ctVariable.getSimpleName(), ex);
+            LOGGER.warn("Failed to rename variable '{}'", ctVariable.getSimpleName(), ex);
         }
     }
 }

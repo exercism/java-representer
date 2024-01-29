@@ -25,11 +25,12 @@ public final class RenameFields extends AbstractProcessor<CtField<?>> {
 
     @Override
     public void process(CtField<?> ctField) {
-        LOGGER.debug("Renaming field {}", ctField.getSimpleName());
+        var placeholder = this.placeholderGenerator.getPlaceholder(ctField.getSimpleName());
+        LOGGER.info("Renaming field '{}' to '{}'", ctField.getSimpleName(), placeholder);
 
         new CtRenameFieldRefactoring()
                 .setTarget(ctField)
-                .setNewName(this.placeholderGenerator.getPlaceholder(ctField.getSimpleName()))
+                .setNewName(placeholder)
                 .refactor();
     }
 
