@@ -6,10 +6,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-public class RepresenterTest {
+class RepresenterTest {
     @ParameterizedTest
     @MethodSource("scenarios")
-    public void testRepresentation(String scenario) {
+    void testRepresentation(String scenario) {
         var actual = Representer.generate(path(scenario));
         Approvals.verify(actual.representation(), Approvals.NAMES.withParameters(scenario));
     }
