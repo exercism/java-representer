@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import representer.PlaceholderGenerator;
 import spoon.processing.AbstractProcessor;
 import spoon.refactoring.CtRenameGenericVariableRefactoring;
-import spoon.refactoring.RefactoringException;
 import spoon.reflect.code.CtCatchVariable;
 import spoon.reflect.code.CtLocalVariable;
 import spoon.reflect.declaration.CtParameter;
@@ -41,14 +40,6 @@ public final class RenameVariables extends AbstractProcessor<CtVariable<?>> {
 
         var placeholder = this.placeholderGenerator.getPlaceholder(identifier);
         LOGGER.info("Renaming variable '{}' to '{}'", identifier, placeholder);
-        var refactor = new CtRenameGenericVariableRefactoring()
-                .setTarget(ctVariable)
-                .setNewName(placeholder);
-
-        try {
-            refactor.refactor();
-        } catch (RefactoringException ex) {
-            LOGGER.warn("Failed to rename variable '{}'", identifier, ex);
-        }
+        new CtRenameGenericVariableRefactoring().setTarget(ctVariable).setNewName(placeholder).refactor();
     }
 }

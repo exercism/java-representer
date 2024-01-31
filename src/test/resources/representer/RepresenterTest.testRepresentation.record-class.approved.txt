@@ -1,4 +1,4 @@
-record PLACEHOLDER_01(java.lang.String field) {
-    void PLACEHOLDER_03(int PLACEHOLDER_06) {
+record PLACEHOLDER_01(java.lang.String PLACEHOLDER_02) {
+    void PLACEHOLDER_03(int PLACEHOLDER_04) {
     }
 }

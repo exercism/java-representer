@@ -2,7 +2,6 @@ package representer;
 
 import representer.processors.*;
 import spoon.Launcher;
-import spoon.compiler.builder.ComplianceOptions;
 import spoon.reflect.CtModel;
 import spoon.reflect.declaration.CtType;
 
@@ -15,6 +14,7 @@ class Representer {
         launcher.getEnvironment().setComplianceLevel(19);
         launcher.addInputResource(path);
         launcher.addProcessor(new RenameTypes(placeholders));
+        launcher.addProcessor(new RenameRecordComponents(placeholders));
         launcher.addProcessor(new RenameMethods(placeholders));
         launcher.addProcessor(new RenameFields(placeholders));
         launcher.addProcessor(new RenameVariables(placeholders));

@@ -3,12 +3,9 @@ package representer.processors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import representer.PlaceholderGenerator;
+import representer.refactoring.RenameFieldRefactoring;
 import spoon.processing.AbstractProcessor;
-import spoon.refactoring.AbstractRenameRefactoring;
 import spoon.reflect.declaration.CtField;
-import spoon.reflect.reference.CtReference;
-import spoon.reflect.visitor.chain.CtConsumer;
-import spoon.reflect.visitor.filter.FieldReferenceFunction;
 
 /**
  * This {@link spoon.processing.Processor} renames all fields and their usages to use placeholder names,
@@ -33,25 +30,6 @@ public final class RenameFields extends AbstractProcessor<CtField<?>> {
 
         var placeholder = this.placeholderGenerator.getPlaceholder(identifier);
         LOGGER.info("Renaming field '{}' to '{}'", identifier, placeholder);
-
-        new CtRenameFieldRefactoring()
-                .setTarget(ctField)
-                .setNewName(placeholder)
-                .refactor();
-    }
-
-    private static class CtRenameFieldRefactoring extends AbstractRenameRefactoring<CtField<?>> {
-        protected CtRenameFieldRefactoring() {
-            super(javaIdentifierRE);
-        }
-
-        @Override
-        protected void refactorNoCheck() {
-            getTarget()
-                    .map(new FieldReferenceFunction())
-                    .forEach((CtConsumer<CtReference>) ctReference -> ctReference.setSimpleName(newName));
-
-            target.setSimpleName(newName);
-        }
+        new RenameFieldRefactoring().setTarget(ctField).setNewName(placeholder).refactor();
     }
 }
