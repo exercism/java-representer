@@ -9,6 +9,11 @@ public class Placeholders implements PlaceholderGenerator {
     private final Map<String, String> placeholders = new HashMap<>();
 
     @Override
+    public boolean isPlaceholder(String identifier) {
+        return identifier.startsWith(PLACEHOLDER_PREFIX);
+    }
+
+    @Override
     public String getPlaceholder(String identifier) {
         var placeholder = String.format("%s_%02d", PLACEHOLDER_PREFIX, this.placeholders.size() + 1);
         this.placeholders.put(placeholder, identifier);

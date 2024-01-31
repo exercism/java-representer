@@ -21,8 +21,14 @@ public final class RenameTypes extends AbstractProcessor<CtType<?>> {
 
     @Override
     public void process(CtType<?> ctType) {
-        var placeholder = this.placeholderGenerator.getPlaceholder(ctType.getSimpleName());
-        LOGGER.info("Renaming type '{}' to '{}'", ctType.getSimpleName(), placeholder);
+        var identifier = ctType.getSimpleName();
+
+        if (placeholderGenerator.isPlaceholder(identifier)) {
+            return;
+        }
+
+        var placeholder = this.placeholderGenerator.getPlaceholder(identifier);
+        LOGGER.info("Renaming type '{}' to '{}'", identifier, placeholder);
         Refactoring.changeTypeName(ctType, placeholder);
     }
 }
