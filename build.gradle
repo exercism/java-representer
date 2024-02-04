@@ -16,6 +16,7 @@ repositories {
 dependencies {
     implementation "fr.inria.gforge.spoon:spoon-core:10.4.3-beta-18"
     implementation "com.google.code.gson:gson:2.10.1"
+    implementation "com.google.googlejavaformat:google-java-format:1.19.2"
     implementation "org.slf4j:slf4j-api:2.0.10"
     implementation "ch.qos.logback:logback-core:1.4.12"
     implementation "ch.qos.logback:logback-classic:1.4.12"
@@ -24,6 +25,19 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter"
     testImplementation "org.assertj:assertj-core:3.25.2"
     testImplementation "com.approvaltests:approvaltests:22.3.2"
+}
+
+jar {
+    manifest {
+        // Required for google-java-format
+        // https://github.com/google/google-java-format/blob/c20a02715cf8be569515857d96fd558eb71cfa72/README.md#as-a-library
+        attributes "Add-Exports": "jdk.compiler/com.sun.tools.javac.api " +
+                "jdk.compiler/com.sun.tools.javac.code " +
+                "jdk.compiler/com.sun.tools.javac.file " +
+                "jdk.compiler/com.sun.tools.javac.parser " +
+                "jdk.compiler/com.sun.tools.javac.tree " +
+                "jdk.compiler/com.sun.tools.javac.util"
+    }
 }
 
 shadowJar {
@@ -43,6 +57,15 @@ test {
         showStandardStreams = true
         events = ["passed", "failed", "skipped"]
     }
+
+    jvmArgs = [
+            "--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED",
+            "--add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED",
+            "--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED",
+            "--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED",
+            "--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED",
+            "--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED"
+    ]
 
     finalizedBy jacocoTestReport
 }

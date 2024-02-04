@@ -1,11 +1,16 @@
 package representer;
 
+import com.google.googlejavaformat.java.Formatter;
+import com.google.googlejavaformat.java.FormatterException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import representer.processors.*;
 import spoon.Launcher;
 import spoon.reflect.CtModel;
 import spoon.reflect.declaration.CtType;
 
 class Representer {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Representer.class);
 
     public static Representation generate(String path) {
         var placeholders = new Placeholders();
@@ -31,6 +36,16 @@ class Representer {
             normalized.append(type.toString());
             normalized.append("\n");
         }
-        return normalized.toString();
+        return format(normalized.toString());
+    }
+
+    private static String format(String representation) {
+        try {
+            return new Formatter().formatSource(representation);
+        } catch (FormatterException e) {
+            LOGGER.warn("Caught exception while attempting to format representation, " +
+                    "using unformatted representation instead", e);
+            return representation;
+        }
     }
 }

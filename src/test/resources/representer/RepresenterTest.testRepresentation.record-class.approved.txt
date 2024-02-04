@@ -1,4 +1,3 @@
 record PLACEHOLDER_01(java.lang.String PLACEHOLDER_02) {
-    void PLACEHOLDER_03(int PLACEHOLDER_04) {
-    }
+  void PLACEHOLDER_03(int PLACEHOLDER_04) {}
 }

@@ -1,5 +1,5 @@
 class PLACEHOLDER_01 {
-    java.lang.String PLACEHOLDER_02() {
-        return "Hello, World!";
-    }
+  java.lang.String PLACEHOLDER_02() {
+    return "Hello, World!";
+  }
 }

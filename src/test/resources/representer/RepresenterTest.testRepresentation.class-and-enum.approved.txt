@@ -1,36 +1,38 @@
 enum PLACEHOLDER_01 {
+  PLACEHOLDER_07(1),
+  PLACEHOLDER_08(2),
+  PLACEHOLDER_09(4),
+  PLACEHOLDER_10(8),
+  PLACEHOLDER_11(16),
+  PLACEHOLDER_12(32),
+  PLACEHOLDER_13(64),
+  PLACEHOLDER_14(128);
 
-    PLACEHOLDER_07(1),
-    PLACEHOLDER_08(2),
-    PLACEHOLDER_09(4),
-    PLACEHOLDER_10(8),
-    PLACEHOLDER_11(16),
-    PLACEHOLDER_12(32),
-    PLACEHOLDER_13(64),
-    PLACEHOLDER_14(128);
+  private final int PLACEHOLDER_06;
 
-    private final int PLACEHOLDER_06;
+  PLACEHOLDER_01(int PLACEHOLDER_16) {
+    this.PLACEHOLDER_06 = PLACEHOLDER_16;
+  }
 
-    PLACEHOLDER_01(int PLACEHOLDER_16) {
-        this.PLACEHOLDER_06 = PLACEHOLDER_16;
-    }
-
-    int PLACEHOLDER_03() {
-        return PLACEHOLDER_06;
-    }
+  int PLACEHOLDER_03() {
+    return PLACEHOLDER_06;
+  }
 }
+
 class PLACEHOLDER_02 {
-    private int PLACEHOLDER_15;
+  private int PLACEHOLDER_15;
 
-    PLACEHOLDER_02(int PLACEHOLDER_17) {
-        this.PLACEHOLDER_15 = PLACEHOLDER_17;
-    }
+  PLACEHOLDER_02(int PLACEHOLDER_17) {
+    this.PLACEHOLDER_15 = PLACEHOLDER_17;
+  }
 
-    java.util.List<PLACEHOLDER_01> PLACEHOLDER_04() {
-        return java.util.EnumSet.allOf(PLACEHOLDER_01.class).stream().filter(this::PLACEHOLDER_05).collect(java.util.stream.Collectors.toList());
-    }
+  java.util.List<PLACEHOLDER_01> PLACEHOLDER_04() {
+    return java.util.EnumSet.allOf(PLACEHOLDER_01.class).stream()
+        .filter(this::PLACEHOLDER_05)
+        .collect(java.util.stream.Collectors.toList());
+  }
 
-    boolean PLACEHOLDER_05(PLACEHOLDER_01 PLACEHOLDER_18) {
-        return (PLACEHOLDER_15 & PLACEHOLDER_18.PLACEHOLDER_03()) != 0;
-    }
+  boolean PLACEHOLDER_05(PLACEHOLDER_01 PLACEHOLDER_18) {
+    return (PLACEHOLDER_15 & PLACEHOLDER_18.PLACEHOLDER_03()) != 0;
+  }
 }
