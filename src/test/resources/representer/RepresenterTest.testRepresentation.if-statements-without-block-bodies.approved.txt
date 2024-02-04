@@ -1,18 +1,18 @@
 class PLACEHOLDER_01 {
-  java.lang.String PLACEHOLDER_02(int PLACEHOLDER_03) {
-    java.lang.StringBuffer PLACEHOLDER_04 = new java.lang.StringBuffer();
-    if ((PLACEHOLDER_03 % 3) == 0) {
-      PLACEHOLDER_04.append("Pling");
+    String PLACEHOLDER_02(int PLACEHOLDER_03) {
+        StringBuffer PLACEHOLDER_04 = new StringBuffer();
+        if ((PLACEHOLDER_03 % 3) == 0) {
+            PLACEHOLDER_04.append("Pling");
+        }
+        if ((PLACEHOLDER_03 % 5) == 0) {
+            PLACEHOLDER_04.append("Plang");
+        }
+        if ((PLACEHOLDER_03 % 7) == 0) {
+            PLACEHOLDER_04.append("Plong");
+        }
+        if (PLACEHOLDER_04.length() == 0) {
+            PLACEHOLDER_04.append(PLACEHOLDER_03);
+        }
+        return PLACEHOLDER_04.toString();
     }
-    if ((PLACEHOLDER_03 % 5) == 0) {
-      PLACEHOLDER_04.append("Plang");
-    }
-    if ((PLACEHOLDER_03 % 7) == 0) {
-      PLACEHOLDER_04.append("Plong");
-    }
-    if (PLACEHOLDER_04.length() == 0) {
-      PLACEHOLDER_04.append(PLACEHOLDER_03);
-    }
-    return PLACEHOLDER_04.toString();
-  }
 }
