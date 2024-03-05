@@ -1,0 +1,3 @@
+record PLACEHOLDER_01(String PLACEHOLDER_02) {
+    void PLACEHOLDER_03(int PLACEHOLDER_04) {}
+}

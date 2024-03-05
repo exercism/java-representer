@@ -1,58 +1,58 @@
 package representer;
 
-import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.visitor.ModifierVisitor;
-import com.github.javaparser.ast.visitor.VoidVisitor;
-import com.github.javaparser.printer.DefaultPrettyPrinterVisitor;
-import com.github.javaparser.printer.configuration.DefaultPrinterConfiguration;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import representer.normalizer.PlaceholderNormalizer;
+import com.google.googlejavaformat.java.Formatter;
+import com.google.googlejavaformat.java.FormatterException;
+import com.google.googlejavaformat.java.JavaFormatterOptions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import representer.processors.*;
+import spoon.Launcher;
+import spoon.compiler.Environment;
+import spoon.reflect.CtModel;
+import spoon.reflect.declaration.CtType;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+class Representer {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Representer.class);
+    private static final JavaFormatterOptions FORMATTER_OPTIONS = JavaFormatterOptions
+            .builder()
+            .style(JavaFormatterOptions.Style.AOSP)
+            .build();
 
-public class Representer {
+    public static Representation generate(String path) {
+        var placeholders = new Placeholders();
 
-    private static final Logger logger = LogManager.getLogger(Representer.class);
+        var launcher = new Launcher();
+        launcher.getEnvironment().setComplianceLevel(19);
+        launcher.getEnvironment().setPrettyPrintingMode(Environment.PRETTY_PRINTING_MODE.AUTOIMPORT);
+        launcher.addInputResource(path);
+        launcher.addProcessor(new RenameTypes(placeholders));
+        launcher.addProcessor(new RenameRecordComponents(placeholders));
+        launcher.addProcessor(new RenameMethods(placeholders));
+        launcher.addProcessor(new RenameFields(placeholders));
+        launcher.addProcessor(new RenameVariables(placeholders));
+        launcher.addProcessor(new RemoveComments());
+        launcher.buildModel();
+        launcher.process();
 
-    private List<ModifierVisitor<String>> genericNormalizers;
-    private List<VoidVisitor<String>> voidNormalizers;
+        return new Representation(getRepresentationString(launcher.getModel()), placeholders.getPlaceholders());
+    }
 
-    public Representer(List<ModifierVisitor<String>> genericNormalizers,
-            List<VoidVisitor<String>> voidNormalizer) {
-        this.voidNormalizers = voidNormalizer != null ? voidNormalizer : Collections.emptyList();
-        this.genericNormalizers =
-                genericNormalizers != null ? genericNormalizers : Collections.emptyList();
-        if (logger.isInfoEnabled()) {
-            List<String> loadedNormalizersNames = Stream
-                    .concat(this.voidNormalizers.stream().map(n -> n.getClass().getSimpleName()),
-                            this.genericNormalizers.stream().map(n -> n.getClass().getSimpleName()))
-                    .collect(Collectors.toList());
-            logger.info("Normalizers loaded: {}", loadedNormalizersNames);
+    private static String getRepresentationString(CtModel model) {
+        var normalized = new StringBuilder();
+        for (CtType<?> type : model.getAllTypes()) {
+            normalized.append(type.toString());
+            normalized.append("\n");
+        }
+        return format(normalized.toString());
+    }
+
+    private static String format(String representation) {
+        try {
+            return new Formatter(FORMATTER_OPTIONS).formatSource(representation);
+        } catch (FormatterException e) {
+            LOGGER.warn("Caught exception while attempting to format representation, " +
+                    "using unformatted representation instead", e);
+            return representation;
         }
     }
-
-    public String generate(CompilationUnit unit) {
-        voidNormalizers.forEach(n -> unit.accept(n, null));
-        genericNormalizers.forEach(n -> unit.accept(n, null));
-        DefaultPrettyPrinterVisitor visitor = new DefaultPrettyPrinterVisitor(new DefaultPrinterConfiguration());
-        unit.accept(visitor, null);
-        return visitor.toString();
-    }
-
-    public Optional<PlaceholderNormalizer> placeholderNormalizer() {
-        return placeholderNormalizer(voidNormalizers);
-    }
-
-    private Optional<PlaceholderNormalizer> placeholderNormalizer(
-            List<VoidVisitor<String>> normalizers) {
-        return normalizers.stream().filter(n -> n.getClass() == PlaceholderNormalizer.class)
-                .map(n -> (PlaceholderNormalizer) n)
-                .findFirst();
-    }
-
 }

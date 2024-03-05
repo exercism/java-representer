@@ -2,6 +2,7 @@
 .settings/
 .project
 .classpath
+src/test/resources/**/*.received.txt
 tests/**/*/representation.txt
 tests/**/*/representation.json
 tests/**/*/mapping.json

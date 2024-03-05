@@ -1,71 +1,33 @@
 package representer;
 
-import com.github.javaparser.ast.CompilationUnit;
-import org.junit.Test;
-import representer.normalizer.*;
+import org.approvaltests.Approvals;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
+import java.util.stream.Stream;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
-public class RepresenterTest {
-    private final TestUtils testUtils = new TestUtils();
-
-    @Test
-    public void simple_scenario() throws Exception {
-        CompilationUnit sourceCode = testUtils.getParsedResourceContent("representer/simple_scenario_input");
-        Representer representer = new Representer(null, Arrays.asList(new PlaceholderNormalizer()));
-        final String codeNormalized = representer.generate(sourceCode);
-        final String expected = testUtils.getResourceContent("representer/result_expected");
-        assertThat(codeNormalized, is(expected));
+class RepresenterTest {
+    @ParameterizedTest
+    @MethodSource("scenarios")
+    void testRepresentation(String scenario) {
+        var actual = Representer.generate(path(scenario));
+        Approvals.verify(actual.representation(), Approvals.NAMES.withParameters(scenario));
     }
 
-    @Test
-    public void package_scenario() throws Exception {
-        CompilationUnit sourceCode = testUtils.getParsedResourceContent("representer/package_scenario_input");
-        Representer representer = new Representer(Arrays.asList(new PackageNormalizer()),
-                Arrays.asList(new PlaceholderNormalizer()));
-        final String codeNormalized = representer.generate(sourceCode);
-        final String expected = testUtils.getResourceContent("representer/result_expected");
-        assertThat(codeNormalized, is(expected));
+    private static Stream<String> scenarios() {
+        return Stream.of(
+                "simple",
+                "class-and-enum",
+                "class-with-nested-enum",
+                "lambda-arguments",
+                "generic-type-arguments",
+                "if-statements-without-block-bodies",
+                "record-class",
+                "switch-expression"
+        );
     }
 
-    @Test
-    public void comments_scenario() throws Exception {
-        CompilationUnit sourceCode = testUtils.getParsedResourceContent("representer/comments_scenario_input");
-        Representer representer =
-                new Representer(Arrays.asList(new PackageNormalizer(), new CommentNormalizer()),
-                        Arrays.asList(new PlaceholderNormalizer()));
-        final String codeNormalized = representer.generate(sourceCode);
-        final String expected = testUtils.getResourceContent("representer/result_expected");
-        assertThat(codeNormalized, is(expected));
+    private String path(String scenario) {
+        return getClass().getResource("/scenarios/" + scenario).getPath();
     }
-
-
-    @Test
-    public void import_scenario() throws Exception {
-        CompilationUnit sourceCode = testUtils.getParsedResourceContent("representer/import_scenario_input");
-        Representer representer =
-                new Representer(
-                        Arrays.asList(new PackageNormalizer(), new CommentNormalizer(),
-                                new ImportNormalizer()),
-                        Arrays.asList(new PlaceholderNormalizer()));
-        final String codeNormalized = representer.generate(sourceCode);
-        final String expected = testUtils.getResourceContent("representer/result_expected");
-        assertThat(codeNormalized, is(expected));
-    }
-
-    @Test
-    public void block_scenario() throws Exception {
-        CompilationUnit sourceCode = testUtils.getParsedResourceContent("representer/block_scenario_input");
-        Representer representer =
-                new Representer(Arrays.asList(new PackageNormalizer(), new BlockNormalizer()),
-                        Arrays.asList(new PlaceholderNormalizer()));
-        final String codeNormalized = representer.generate(sourceCode);
-        final String expected = testUtils.getResourceContent("representer/result_expected");
-        assertThat(codeNormalized, is(expected));
-    }
-
-  
 }

@@ -22,6 +22,8 @@ jobs:
           distribution: "temurin"
       - name: Test with Gradle
         run: ./gradlew --no-daemon --continue test
+      - name: Upload test coverage
+        uses: coverallsapp/github-action@3dfc5567390f6fa9267c0ee9c251e4c8c3f18949
       - name: Create test summary
         uses: test-summary/action@fee35d7df20790255fe6aa92cf0f6d28092ecf2f
         with:
