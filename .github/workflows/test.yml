@@ -25,7 +25,7 @@ jobs:
       - name: Upload test coverage
         uses: coverallsapp/github-action@643bc377ffa44ace6394b2b5d0d3950076de9f63
       - name: Create test summary
-        uses: test-summary/action@032c8a9cec6aaa3c20228112cae6ca10a3b29336
+        uses: test-summary/action@31493c76ec9e7aa675f1585d3ed6f1da69269a86
         with:
           paths: "**/build/test-results/test/*.xml"
         if: always()
