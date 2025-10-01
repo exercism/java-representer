@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . /app
 RUN gradle -i --stacktrace clean build
 
-FROM eclipse-temurin:21
+FROM eclipse-temurin:25
 
 ENV LOGGING_LEVEL=INFO
 
