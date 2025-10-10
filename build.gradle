@@ -2,12 +2,15 @@ plugins {
     id "java"
     id "application"
     id "jacoco"
-    id "com.github.johnrengelman.shadow" version "8.1.1"
+    id 'com.gradleup.shadow' version '9.2.2'
 }
 
 group = "org.exercism"
 version = "1.0-SNAPSHOT"
-mainClassName = "representer.RepresenterCli"
+
+application {
+    mainClass = "representer.RepresenterCli"
+}
 
 repositories {
     mavenCentral()
@@ -25,6 +28,8 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter"
     testImplementation "org.assertj:assertj-core:3.25.3"
     testImplementation "com.approvaltests:approvaltests:25.4.3"
+
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher"
 }
 
 jar {
