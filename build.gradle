@@ -19,7 +19,7 @@ repositories {
 dependencies {
     implementation "fr.inria.gforge.spoon:spoon-core:11.0.0"
     implementation "com.google.code.gson:gson:2.13.2"
-    implementation "com.google.googlejavaformat:google-java-format:1.28.0"
+    implementation "com.google.googlejavaformat:google-java-format:1.31.0"
     implementation "org.slf4j:slf4j-api:2.0.17"
     implementation "ch.qos.logback:logback-core:1.5.19"
     implementation "ch.qos.logback:logback-classic:1.5.19"
