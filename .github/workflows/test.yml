@@ -23,7 +23,7 @@ jobs:
       - name: Test with Gradle
         run: ./gradlew --no-daemon --continue test
       - name: Upload test coverage
-        uses: coverallsapp/github-action@648a8eb78e6d50909eff900e4ec85cab4524a45b
+        uses: coverallsapp/github-action@5cbfd81b66ca5d10c19b062c04de0199c215fb6e
       - name: Create test summary
         uses: test-summary/action@032c8a9cec6aaa3c20228112cae6ca10a3b29336
         with:
