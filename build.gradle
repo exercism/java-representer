@@ -45,13 +45,13 @@ jar {
     }
 }
 
-shadowJar {
+def representerJar = shadowJar {
     mergeServiceFiles()
     archiveFileName.set("java-representer.jar")
 }
 
-artifacts {
-    archives shadowJar
+tasks.named("assemble") {
+  dependsOn(representerJar)
 }
 
 test {
