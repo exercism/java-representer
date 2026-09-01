@@ -4,7 +4,7 @@ WORKDIR /app
 COPY --chown=gradle:gradle . /app
 RUN gradle -i --stacktrace clean build
 
-FROM eclipse-temurin:26.0.1_8-jdk@sha256:939e35776c4582f5454276c42a9ca3825df1b4a983ed2edd4cd9b4e130bb0eeb
+FROM eclipse-temurin:26.0.2_10-jdk@sha256:c0fe66ea21e972724000cf402f8081c7841d960839f69cb0754f40b40f74b2cc
 
 ENV LOGGING_LEVEL=INFO
 
